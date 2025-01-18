@@ -48,10 +48,12 @@ public class WindowFactory {
                 FXMLLoader loader = new FXMLLoader(getClass().getResource("DroneList.fxml"));
                 droneListView = loader.load();
                 DroneListController droneListController = loader.getController();
-                for(Drone drone : DroneStorage.getInstance().getDroneList().values()){
-                    droneListController.createDroneElement(drone);
+                if(!DroneStorage.getInstance().getDroneList().isEmpty()) {
+                    for (Drone drone : DroneStorage.getInstance().getDroneList().values()) {
+                        droneListController.createDroneElement(drone);
+                    }
                 }
-            } catch (IOException e) {
+            } catch (Exception e) {
                 e.printStackTrace();
             }
         }
@@ -64,10 +66,11 @@ public class WindowFactory {
                 FXMLLoader loader = new FXMLLoader(getClass().getResource("DroneCatalogue.fxml"));
                 catalogueView = loader.load();
                 DroneCatalogueController droneCatalogueController = loader.getController();
-                for(DroneType dt : DroneStorage.getInstance().getDroneCatalogue().values()){
-                    droneCatalogueController.createDroneElement(dt);
+                if(!DroneStorage.getInstance().getDroneList().isEmpty()) {
+                    for(DroneType dt : DroneStorage.getInstance().getDroneCatalogue().values()){
+                        droneCatalogueController.createDroneElement(dt);
+                    }
                 }
-
             } catch (IOException e) {
                 e.printStackTrace();
             }

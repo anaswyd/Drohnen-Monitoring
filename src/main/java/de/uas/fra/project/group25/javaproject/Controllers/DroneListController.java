@@ -1,10 +1,13 @@
 package de.uas.fra.project.group25.javaproject.Controllers;
 
 import de.uas.fra.project.group25.javaproject.Drone.Drone;
+import de.uas.fra.project.group25.javaproject.Drone.DroneStorage;
 import de.uas.fra.project.group25.javaproject.Drone.DroneType;
 import de.uas.fra.project.group25.javaproject.WindowAppearance;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.geometry.Pos;
+import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.image.ImageView;
@@ -21,22 +24,21 @@ public class DroneListController implements Initializable {
     public FlowPane parentFlow;
 
 
-
     public void createDroneElement(Drone drone){
         /*
             Create new drone element
         */
 
         AnchorPane newChild = new AnchorPane();
-        newChild.setMaxSize(385, 122);
-        newChild.setPrefSize(385, 122);
+        newChild.setMaxSize(385, 142);
+        newChild.setPrefSize(385, 142);
 
         ImageView icon = new ImageView(String.valueOf(getClass().getResource("/Icons/1177291-200.png")));
         icon.setFitHeight(42);
         icon.setFitWidth(42);
-        AnchorPane.setTopAnchor(icon, 40.0);
+        AnchorPane.setTopAnchor(icon, 50.0);
         AnchorPane.setLeftAnchor(icon, 14.0);
-        AnchorPane.setBottomAnchor(icon, 40.0);
+        AnchorPane.setBottomAnchor(icon, 50.0);
         newChild.getChildren().add(icon);
 
         VBox vBoxL = new VBox(5);
@@ -45,6 +47,9 @@ public class DroneListController implements Initializable {
         vBoxL.getChildren().add(new Label("Carriage Type :"));
         vBoxL.getChildren().add(new Label("Carriage Weight :"));
         vBoxL.getChildren().add(new Label("Created :"));
+        vBoxL.getChildren().add(new Label("Longitude :"));
+        vBoxL.getChildren().add(new Label("Latitude :"));
+
         vBoxL.setAlignment(Pos.valueOf("CENTER_LEFT"));
         AnchorPane.setTopAnchor(vBoxL, 0.0);
         AnchorPane.setLeftAnchor(vBoxL, 70.0);
@@ -57,6 +62,9 @@ public class DroneListController implements Initializable {
         vBoxR.getChildren().add(new Label(drone.getCarriage_type()));
         vBoxR.getChildren().add(new Label(String.valueOf(drone.getCarriage_weight())));
         vBoxR.getChildren().add(new Label(drone.getCreated()));
+        vBoxR.getChildren().add(new Label(String.valueOf(drone.getDynamics().get(1).getLongitude())));
+        vBoxR.getChildren().add(new Label(String.valueOf(drone.getDynamics().get(1).getLatitude())));
+
         vBoxR.setAlignment(Pos.valueOf("CENTER_RIGHT"));
         AnchorPane.setTopAnchor(vBoxR, 0.0);
         AnchorPane.setRightAnchor(vBoxR, 14.0);
@@ -84,9 +92,9 @@ public class DroneListController implements Initializable {
     }
 
 
-
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
+
         sceneAnchor.heightProperty().addListener((observable, oldValue, newValue) -> {
             //System.out.println("height changed");
             try {

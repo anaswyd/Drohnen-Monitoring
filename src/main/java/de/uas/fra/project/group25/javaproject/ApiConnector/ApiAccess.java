@@ -40,6 +40,7 @@ public class ApiAccess  {
     }
 
     private void fetchDrones() {
+        this.outputDrones.clear();
         try {
             List<String> relevantPages = this.drone_type.findRelevantPages();
             outputDrones.clear(); //Leeren der Liste
@@ -80,6 +81,7 @@ public class ApiAccess  {
     }
 
     private void fetchCatalogue() {
+        this.outputCatalogue.clear();
         try {
             List<String> relevantPages = this.droneType_type.findRelevantPages();
             outputCatalogue.clear(); //Leeren der Liste

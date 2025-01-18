@@ -14,13 +14,12 @@ public class Drone {
 
     public Drone(int id, DroneType dronetype, String created, String serialnumber, int carriage_weight, String carriage_type, List<DroneDynamic> droneDynamic) {
         this.id = id;
-        this.droneDynamic = droneDynamic;
         this.dronetype = dronetype;
         this.created = created;
         this.serialnumber = serialnumber;
         this.carriage_weight = carriage_weight;
         this.carriage_type = carriage_type;
-        this.droneDynamic = new ArrayList<DroneDynamic>() ; //!!!!
+        this.droneDynamic = new ArrayList<DroneDynamic>(); //!!!!
     }
 
     public void addDroneDynamic(DroneDynamic dynamic){

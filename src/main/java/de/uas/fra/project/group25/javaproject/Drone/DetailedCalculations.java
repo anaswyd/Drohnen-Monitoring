@@ -35,6 +35,14 @@ public class DetailedCalculations {
         return EARTH_RADIUS * c;
 
     }
+
+    /**
+     * Calculates all distances to the start location for each timestamp.
+     * @param longitudes All necessary latitudes
+     * @param latitudes All necessary longitudes
+     * @return List of distances to start. Each Element is one more timestamp away from the start.
+     */
+
     public List<Double> calculateDistance(List<String> longitudes, List<String> latitudes) {
         List<Double> distances = new ArrayList<Double>();
         distances.add(0.0);
@@ -44,6 +52,12 @@ public class DetailedCalculations {
         return distances;
     }
 
+    /**
+     * calculates average speed over time as m/s for each time stamp
+     * @param distances List of all distances
+     * @param time_between_intervals time in seconds between interval
+     * @return List of average speed for each timestamp
+     */
     public List<Double> calculateAverageSpeed(List<Double> distances, long time_between_intervals){
         List<Double> averageSpeeds = new ArrayList<Double>();
         int i = 0;
@@ -52,13 +66,19 @@ public class DetailedCalculations {
                 averageSpeeds.add(0.0);
             }
             else {
-                averageSpeeds.add(distance / time_between_intervals * i);
+                averageSpeeds.add((distance /  time_between_intervals * i)/1000);
             }
             i = i + 1;
         }
         return averageSpeeds;
     }
 
+    /**
+     *
+     * @param status List of Status for each timestamp
+     * @param time_between_intervals
+     * @return
+     */
     public List<Double> calculateActiveTime(List<String> status,long time_between_intervals){
         List<Double> activeTime = new ArrayList<Double>();
         int i = 0;
@@ -84,6 +104,7 @@ public class DetailedCalculations {
         }
         return activeTime;
     }
+
 
     public List<Integer> calculateBatteryUsage(List<Integer> battery_status) {
         List<Integer> usage = new ArrayList<Integer>();

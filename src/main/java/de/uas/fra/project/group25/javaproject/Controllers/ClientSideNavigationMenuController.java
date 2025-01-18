@@ -5,6 +5,7 @@ import de.uas.fra.project.group25.javaproject.WindowAppearance;
 import javafx.event.ActionEvent;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
 
@@ -61,8 +62,18 @@ public class ClientSideNavigationMenuController implements Initializable {
         }
     }
 
+
     public void refreshOnAction(ActionEvent actionEvent){
         DroneStorage.getInstance().updateData();
+        try{
+            applicationWindow.setCenter(WindowAppearance.getInstance().getWindowFactory().getListView());
+            System.out.println("DroneList refresh");
+            applicationWindow.setCenter(WindowAppearance.getInstance().getWindowFactory().getCatalogueView());
+            System.out.println("DroneCatalogue refresh");
+            
+        }catch (IOException e){
+            e.printStackTrace();
+        }
     }
 
     public void fitCenter() throws IOException {
@@ -81,5 +92,6 @@ public class ClientSideNavigationMenuController implements Initializable {
                 throw new RuntimeException(e);
             }
         });
+
     }
 }
