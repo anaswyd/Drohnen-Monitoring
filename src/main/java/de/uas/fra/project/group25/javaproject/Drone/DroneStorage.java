@@ -18,7 +18,8 @@ public class DroneStorage {
     }
 
     /**
-     *@return Singleton class with the access to all drone specific data
+     * returns Singleton class with the access to all drone specific data
+     *@return DroneStorage
      */
 
     public static DroneStorage getInstance(){
@@ -31,12 +32,13 @@ public class DroneStorage {
      * retrieves the latest data from dronesim.facets-labs.com
      */
     public void updateData() {
+        //disable button so only one update at a time is possible
         try {
             (WindowAppearance.getInstance().getStage().getScene().lookup("#refreshButton")).setDisable(true);
         }catch (Exception e){
             e.printStackTrace();
         }
-
+        //create a thread that updates the data
         Thread thread = new Thread(()->{
             apiAccess.update();
             try {
@@ -49,14 +51,16 @@ public class DroneStorage {
     }
 
     /**
-     * @return Hashmap with all the  different drone types (key value is the drone type id from dronesim.facets-labs.com)
+     * Hashmap with all the  different drone types (key value is the drone type id from dronesim.facets-labs.com)
+     * @return droneCatalogue as Hashmap<Integer, DroneType>
      */
     public HashMap<Integer, DroneType> getDroneCatalogue(){
         return this.apiAccess.getOutputCatalogue();
     }
 
     /**
-     * @return Hashmap with all drones (key value is the drone id from dronesim.facets-labs.com)
+     * Hashmap with all drones (key value is the drone id from dronesim.facets-labs.com)
+     * @return droneList as HashMap<Integer, Drone>
      */
     public HashMap<Integer, Drone> getDroneList() {
         HashMap<Integer, Drone> outputDrone;

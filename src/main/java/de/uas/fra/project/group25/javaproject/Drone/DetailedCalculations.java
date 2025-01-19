@@ -106,6 +106,11 @@ public class DetailedCalculations {
     }
 
 
+    /**
+     * Calculates for each drone the batteryusage
+     * @param battery_status
+     * @return 
+     */
     public List<Integer> calculateBatteryUsage(List<Integer> battery_status) {
         List<Integer> usage = new ArrayList<Integer>();
         int sum = 0;

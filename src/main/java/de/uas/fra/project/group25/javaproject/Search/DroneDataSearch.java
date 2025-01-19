@@ -4,7 +4,11 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class DroneDataSearch extends AbstractSearch {
-
+    /**
+     * creates a DynamicsSearch
+     * @param searchType enum DYNAMICS required
+     * @throws WrongSearchTypeException if wrong searchType was used
+     */
     public DroneDataSearch(SearchType searchType) throws WrongSearchTypeException {
         super(searchType);
         if (TYPE_CHECK.equals(searchType.getSearchType())){
@@ -12,6 +16,10 @@ public class DroneDataSearch extends AbstractSearch {
         }
     }
 
+    /**
+     * finds all drones on dronesim.facets-labs.com
+     * @return list of links to download
+     */
     @Override
     public List<String> findRelevantPages() {
         List<String> list = new ArrayList<String>();

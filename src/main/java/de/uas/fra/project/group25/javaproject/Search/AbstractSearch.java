@@ -15,7 +15,7 @@ public abstract class AbstractSearch {
     protected String currentPage = "";
     protected ApiConnector apiConnector = new ApiConnector();
 
-    AbstractSearch(SearchType searchType){
+    public AbstractSearch(SearchType searchType){
         this.START_URL = HUB_URL + searchType.getSearchType();
         this.currentPage = START_URL;
     }
@@ -32,6 +32,12 @@ public abstract class AbstractSearch {
         this.currentPage = getNextPage(response.toString());
         return currentPage;
     }
+
+    /**
+     *
+     * @param jsonInput
+     * @return
+     */
     private String getNextPage(String jsonInput) {
         JSONObject jsonFile = new JSONObject(jsonInput);
         String nextPage;

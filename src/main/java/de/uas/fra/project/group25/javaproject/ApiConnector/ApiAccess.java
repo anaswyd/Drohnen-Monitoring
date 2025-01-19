@@ -15,14 +15,16 @@ import java.util.List;
 
 
 public class ApiAccess  {
-    HashMap<Integer ,Drone> outputDrones ;
-    HashMap<Integer, DroneType> outputCatalogue ;
-    ApiConnector apiConnector;
-    DroneDataSearch drone_type;
-    DroneDataSearch droneType_type;
-    DynamicsSearch dynamic_type;
+    private final HashMap<Integer ,Drone> outputDrones ;
+    private final HashMap<Integer, DroneType> outputCatalogue ;
+    private final ApiConnector apiConnector;
+    private final DroneDataSearch drone_type;
+    private final DroneDataSearch droneType_type;
+    private final DynamicsSearch dynamic_type;
 
-
+    /**
+     * constructor of ApiAccess
+     */
     public ApiAccess(){
         this.apiConnector = new ApiConnector();
         this.outputDrones  = new HashMap<Integer, Drone>();
@@ -32,6 +34,10 @@ public class ApiAccess  {
         this.dynamic_type = new DynamicsSearch(SearchType.DYNAMICS);
         update();
     }
+
+    /**
+     *
+     */
 
     public void update(){
         fetchCatalogue();
@@ -52,13 +58,9 @@ public class ApiAccess  {
                 for (int i = 0; i < jsonFile.length(); i++) {
                     o = jsonFile.getJSONObject(i);
                     int id=o.getInt("id");
-                    //DroneType dronetype= new DroneType();
-                    //DroneType dronetype=o.getString("dronetype"); !!!
-
-                    //CURRENTLY ADDING DRONETYPE VIA HASHMAP
 
                     String temp=o.getString("dronetype");  //outsourcen
-                    Integer typeId = Integer.parseInt(temp.replace("http://dronesim.facets-labs.com/api/dronetypes/", "").replace("/", "")); //temp should contain DroneType ID
+                    Integer typeId = Integer.parseInt(temp.replace("http://dronesim.facets-labs.com/api/dronetypes/", "").replace("/", ""));
 
                     DroneType dronetype = outputCatalogue.get(typeId) ;
                     String created=o.getString("created");
@@ -115,6 +117,11 @@ public class ApiAccess  {
         }
     }
 
+    /**
+     * fetches all dynamics for a single drone
+     * @param drone_id id of the drone
+     * @return JSONObject for details
+     */
     private JSONObject fetchDynamics(int drone_id){
         try {
             String relevantPage = this.dynamic_type.findDetailedRelevantPage(drone_id);
@@ -191,7 +198,6 @@ public class ApiAccess  {
                     String temp=o.getString("drone");
                     Integer id = Integer.parseInt(temp.replace("http://dronesim.facets-labs.com/api/drones/", "").replace("/", "")); //temp should contain DroneType ID
                     DroneDynamic d = new DroneDynamic(timestamp, speed, align_roll, align_pitch, align_yaw, longitude, latitude, battery_status, last_seen, status);
-                    outputDrones.get(id).clearDynamics();
                     outputDrones.get(id).addDroneDynamic(d);
                 }
             }

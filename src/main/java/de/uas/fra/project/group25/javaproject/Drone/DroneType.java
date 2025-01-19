@@ -11,6 +11,17 @@ public class DroneType {
     private final int control_range;
     private final int max_carriage;
 
+    /**
+     * Constructor of DroneType object
+     * @param id Dronetype id
+     * @param typename Dronetype name
+     * @param manufacturer Name of the manufacturer
+     * @param weight Weight in g
+     * @param max_speed Maximum speed in km/h
+     * @param battery_capacity Battery capacity in mAh
+     * @param control_range Control range in m
+     * @param max_carriage Maximum carriage in g
+     */
     public DroneType(int id, String typename, String manufacturer, int weight, int max_speed, int battery_capacity, int control_range, int max_carriage) {
         this.id = id;
         this.typename = typename;
@@ -57,7 +68,10 @@ public class DroneType {
 
 
 
-
+    /**
+     * Debug method to test result in console
+     * @return String with all information
+     */
     @Override
     public String toString() {
         return "DroneType{" +
@@ -72,7 +86,9 @@ public class DroneType {
                 "}\n";
     }
 
-
+    /**
+     * Override hashCode() method to use id of the dronetype for hashing
+     */
     @Override
     public int hashCode() {
         return this.id;

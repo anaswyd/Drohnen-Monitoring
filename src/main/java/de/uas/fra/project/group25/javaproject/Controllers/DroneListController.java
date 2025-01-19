@@ -61,7 +61,7 @@ public class DroneListController implements Initializable {
         vBoxR.getChildren().add(new Label(drone.getSerialnumber()));
         vBoxR.getChildren().add(new Label(drone.getCarriage_type()));
         vBoxR.getChildren().add(new Label(String.valueOf(drone.getCarriage_weight())));
-        vBoxR.getChildren().add(new Label(drone.getCreated()));
+        vBoxR.getChildren().add(new Label(drone.getCreated().toString()));
         vBoxR.getChildren().add(new Label(String.valueOf(drone.getDynamics().get(1).getLongitude())));
         vBoxR.getChildren().add(new Label(String.valueOf(drone.getDynamics().get(1).getLatitude())));
 

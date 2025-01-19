@@ -12,6 +12,12 @@ public class ApiConnector {
     final String TOKEN = "Token 64380548480b62bfc42181f19df477ef92839670";
     final String USER_AGENT = "Google Chrome";
 
+    /**
+     * establishes connection to RESTApi
+     * @param endpointUrl Api endpoint to connect to
+     * @return response Stringbuilder of fetched data
+     * @throws Exception
+     */
     public StringBuilder connect(String endpointUrl) throws Exception {
         URL url;
         HttpURLConnection connection = null;
