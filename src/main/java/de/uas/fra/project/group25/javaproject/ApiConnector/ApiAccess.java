@@ -36,7 +36,7 @@ public class ApiAccess  {
     }
 
     /**
-     *
+     * updating drone data
      */
 
     public void update(){
@@ -45,6 +45,10 @@ public class ApiAccess  {
         fetchStartEndDynamics();
     }
 
+    /**
+     * fetches all drones by calling the ApiConnector with suitable links, creates a (Drone) object for each
+     * drone and populates the (outputDrones) map with these Drone objects, using their IDs as keys
+     */
     private void fetchDrones() {
         this.outputDrones.clear();
         try {
@@ -67,8 +71,8 @@ public class ApiAccess  {
                     String serialnumber=o.getString("serialnumber");
                     String carriage_type=o.getString("carriage_type");
                     int carriage_weight=o.getInt("carriage_weight");
-                    Drone d = new Drone(id,dronetype,created,serialnumber,carriage_weight,carriage_type,null);
-                    outputDrones.put(id,d);
+                    Drone drone = new Drone(id,dronetype,created,serialnumber,carriage_weight,carriage_type,null);
+                    outputDrones.put(id,drone);
                 }
             }
         } catch (WrongSearchTypeException e) {
@@ -81,6 +85,11 @@ public class ApiAccess  {
             throw new RuntimeException(e);
         }
     }
+
+    /**
+     * fetches all droneType data by calling the ApiConnector with suitable links, creates a (DroneType) object for each
+     * drone type and populates the (outputCatalogue) map with these DroneType objects, using their IDs as keys
+     */
 
     private void fetchCatalogue() {
         this.outputCatalogue.clear();
@@ -102,8 +111,8 @@ public class ApiAccess  {
                     int max_speed=o.getInt("max_speed");
                     String manufacturer=o.getString("manufacturer");
                     String typename=o.getString("typename");
-                    DroneType dt = new DroneType(id,typename,manufacturer,weight,max_speed,battery_capacity,control_range,max_carriage);
-                    outputCatalogue.put(id,dt);
+                    DroneType droneType = new DroneType(id,typename,manufacturer,weight,max_speed,battery_capacity,control_range,max_carriage);
+                    outputCatalogue.put(id,droneType);
                 }
             }
         } catch (WrongSearchTypeException e) {
@@ -174,6 +183,9 @@ public class ApiAccess  {
 //            throw new RuntimeException(e);
 //        }
 //    }
+    /**
+     * fetches start and end dynamics for a single drone
+     */
 
     private void fetchStartEndDynamics(){
         try {
@@ -197,8 +209,8 @@ public class ApiAccess  {
                     String status = o.getString("status");
                     String temp=o.getString("drone");
                     Integer id = Integer.parseInt(temp.replace("http://dronesim.facets-labs.com/api/drones/", "").replace("/", "")); //temp should contain DroneType ID
-                    DroneDynamic d = new DroneDynamic(timestamp, speed, align_roll, align_pitch, align_yaw, longitude, latitude, battery_status, last_seen, status);
-                    outputDrones.get(id).addDroneDynamic(d);
+                    DroneDynamic dynamic = new DroneDynamic(timestamp, speed, align_roll, align_pitch, align_yaw, longitude, latitude, battery_status, last_seen, status);
+                    outputDrones.get(id).addDroneDynamic(dynamic);
                 }
             }
         } catch (WrongSearchTypeException e) {
