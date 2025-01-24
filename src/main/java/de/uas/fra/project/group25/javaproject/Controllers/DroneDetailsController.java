@@ -1,8 +1,6 @@
 package de.uas.fra.project.group25.javaproject.Controllers;
 
-import de.uas.fra.project.group25.javaproject.Drone.Drone;
 import de.uas.fra.project.group25.javaproject.Drone.DroneStorage;
-import de.uas.fra.project.group25.javaproject.WindowAppearance;
 import de.uas.fra.project.group25.javaproject.Drone.DroneDetailRow;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
@@ -15,7 +13,6 @@ import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.VBox;
-import org.json.JSONObject;
 
 import java.net.URL;
 import java.util.List;
@@ -30,6 +27,8 @@ public class DroneDetailsController implements Initializable {
     @FXML
     private AnchorPane detailsSceneAnchor;
 
+    @FXML
+    private TableColumn<DroneDetailRow, String> colTimestamp;
     @FXML
     private TableColumn<DroneDetailRow, Double> colLat;
     @FXML
@@ -78,53 +77,18 @@ public class DroneDetailsController implements Initializable {
             @Override
             public void handle(ActionEvent actionEvent) {
                 selectOnAction(Integer.parseInt(newChild.getId()));
-                //System.out.println(newChild.getId());
             }
         });
-
         newChild.setToggleGroup(detailSelector);
-
         parentV.getChildren().add(newChild);
     }
 
 
-//
-//    private void fitSize(){
-//
-//        /*
-//        Explanation:    1. Get BorderPane "ApplicationContainer" with "WindowAppearance.getInstance().getStage().getScene().getRoot()"
-//                        2. Cast to BorderPane to "getCenter()"
-//                        3. Cast "center" to AnchorPane to get "heightProperty()" and "widthProperty()"
-//                        4. Bind Size of ScrollPane to step 3
-//                        5. Bind size of FlowPane to ScrollPane
-//        */
-//
-//        parentScroll.prefHeightProperty().bind((WindowAppearance.getInstance().getStage()).heightProperty());
-//        parentScroll.prefWidthProperty().bind((WindowAppearance.getInstance().getStage()).widthProperty());
-//        parentTable.prefHeightProperty().bind(parentScroll.heightProperty());
-//        parentTable.prefWidthProperty().bind(parentScroll.widthProperty());
-//    }
-
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-//
-//        detailsSceneAnchor.heightProperty().addListener((observable, oldValue, newValue) -> {
-//            //System.out.println("height changed");
-//            fitSize();
-//        });
-//        detailsSceneAnchor.widthProperty().addListener((observable, oldValue, newValue) -> {
-//            //System.out.println("width changed");
-//            fitSize();
-//        });
-//        WindowAppearance.getInstance().getStage().heightProperty().addListener((observable, oldValue, newValue) -> {
-//            //System.out.println("Window height changed");
-//            fitSize();
-//        });
-//        WindowAppearance.getInstance().getStage().widthProperty().addListener((observable, oldValue, newValue) -> {
-//            //System.out.println("Window width changed");
-//            fitSize();
-//        });
+
+        colTimestamp.setCellValueFactory(new PropertyValueFactory<DroneDetailRow, String>("timestamp"));
         colLat.setCellValueFactory(new PropertyValueFactory<DroneDetailRow, Double>("latitude"));
         colLong.setCellValueFactory(new PropertyValueFactory<DroneDetailRow, Double>("longitude"));
         colTotalDistance.setCellValueFactory(new PropertyValueFactory<DroneDetailRow, Double>("totalDistance"));

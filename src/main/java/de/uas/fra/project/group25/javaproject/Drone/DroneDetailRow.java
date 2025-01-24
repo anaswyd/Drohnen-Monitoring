@@ -2,8 +2,6 @@ package de.uas.fra.project.group25.javaproject.Drone;
 
 import org.json.JSONObject;
 
-import java.util.ArrayList;
-import java.util.List;
 
 public class DroneDetailRow {
     private final Double latitude;
@@ -79,7 +77,7 @@ public class DroneDetailRow {
      * @param time_between_intervals
      * @return
      */
-    public long calculateActiveTime(String status, long previousActiveTime, long time_between_intervals){
+    private long calculateActiveTime(String status, long previousActiveTime, long time_between_intervals){
         long activeTime = 0;
         switch(status) {
             case "ON":
@@ -104,7 +102,7 @@ public class DroneDetailRow {
      * @param time_between_intervals time in seconds between interval
      * @return List of average speed for each timestamp
      */
-    public Double calculateAverageSpeed(double totalDistance, long totalActiveTime){
+    private Double calculateAverageSpeed(double totalDistance, long totalActiveTime){
         double averageSpeed = 0.0;
         if(totalActiveTime != 0){
             averageSpeed = (totalDistance/1000)/ totalActiveTime;
@@ -118,7 +116,7 @@ public class DroneDetailRow {
      * @param battery_status
      * @return
      */
-    public long calculateBatteryUsage(int batteryStatus, int previousBatteryStatus, long totalBatteryConsumption) {
+    private long calculateBatteryUsage(int batteryStatus, int previousBatteryStatus, long totalBatteryConsumption) {
         //calculate batteryusage
         if(batteryStatus < previousBatteryStatus){
             totalBatteryConsumption = totalBatteryConsumption + ( previousBatteryStatus - batteryStatus );
@@ -159,4 +157,6 @@ public class DroneDetailRow {
     public Long getTotalBatteryConsumption() {
         return totalBatteryConsumption;
     }
+
+    public String getTimestamp() {return timestamp;}
 }

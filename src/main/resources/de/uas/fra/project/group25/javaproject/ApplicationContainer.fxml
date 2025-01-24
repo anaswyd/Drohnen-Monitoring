@@ -21,51 +21,52 @@
    <left>
       <BorderPane pickOnBounds="false" prefWidth="270.0" style="-fx-background-color: dadada;" BorderPane.alignment="CENTER">
          <center>
-            <VBox alignment="TOP_CENTER" fillWidth="false" pickOnBounds="false" prefWidth="270.0" BorderPane.alignment="CENTER">
-               <children>
-                  <AnchorPane minHeight="-Infinity" prefWidth="200.0" stylesheets="@../../../../../../StyleSheets/ClientSideNavigationMenu.css">
-                     <children>
-                        <HBox alignment="BOTTOM_LEFT" layoutY="7.0" stylesheets="@../../../../../../StyleSheets/ClientSideNavigationMenu.css" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="40.0">
-                           <children>
-                              <Button maxHeight="40.0" maxWidth="40.0" minHeight="40.0" minWidth="40.0" mnemonicParsing="false" onAction="#homeOnAction" prefHeight="40.0" prefWidth="40.0">
-                                 <graphic>
-                                    <ImageView fitHeight="40.0" fitWidth="40.0" pickOnBounds="true" preserveRatio="true">
-                                       <image>
-                                          <Image url="@../../../../../../Icons/home.png" />
-                                       </image>
-                                    </ImageView>
-                                 </graphic>
-                              </Button>
-                           </children>
-                        </HBox>
-                        <VBox alignment="TOP_CENTER" layoutY="228.0" spacing="20.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="100.0">
-                           <children>
-                              <Button maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#droneListOnAction" text="Drone List" />
-                              <Button maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#droneCatalogueOnAction" text="Drone Catalogue" />
-                              <Button maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#droneDetailsOnAction" text="Details" />
-                           </children>
-                        </VBox>
-                        <VBox alignment="TOP_CENTER" prefWidth="100.0" spacing="20.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="400.0">
-                           <children>
-                              <ToggleButton mnemonicParsing="false" text="Dark / Light" />
-                              <Button maxWidth="1.7976931348623157E308" mnemonicParsing="false" text="Export Path" />
-                              <Button fx:id="refreshButton" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#refreshOnAction" text="Refresh Drone Information" />
-                           </children>
-                        </VBox>
-                     </children>
-                  </AnchorPane>
-               </children>
+            <VBox alignment="TOP_CENTER" fillWidth="false" pickOnBounds="false" prefWidth="270.0"
+                  BorderPane.alignment="CENTER">
+               <AnchorPane minHeight="-Infinity" prefWidth="200.0"
+                           stylesheets="@../../../../../../StyleSheets/ClientSideNavigationMenu.css">
+                  <HBox alignment="BOTTOM_LEFT" layoutY="7.0"
+                        stylesheets="@../../../../../../StyleSheets/ClientSideNavigationMenu.css"
+                        AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="40.0">
+                     <Button maxHeight="40.0" maxWidth="40.0" minHeight="40.0" minWidth="40.0"
+                             mnemonicParsing="false" onAction="#homeOnAction" prefHeight="40.0" prefWidth="40.0">
+                        <graphic>
+                           <ImageView fitHeight="40.0" fitWidth="40.0" pickOnBounds="true" preserveRatio="true">
+                              <Image url="@../../../../../../Icons/home.png"/>
+                           </ImageView>
+                        </graphic>
+                     </Button>
+                  </HBox>
+                  <VBox alignment="TOP_CENTER" layoutY="228.0" spacing="20.0" AnchorPane.leftAnchor="0.0"
+                        AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="100.0">
+                     <Button maxWidth="1.7976931348623157E308" mnemonicParsing="false"
+                             onAction="#droneListOnAction" text="Drone List"/>
+                     <Button maxWidth="1.7976931348623157E308" mnemonicParsing="false"
+                             onAction="#droneCatalogueOnAction" text="Drone Catalogue"/>
+                     <Button maxWidth="1.7976931348623157E308" mnemonicParsing="false"
+                             onAction="#droneDetailsOnAction" text="Details"/>
+                  </VBox>
+                  <VBox alignment="TOP_CENTER" prefWidth="100.0" spacing="20.0" AnchorPane.leftAnchor="0.0"
+                        AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="400.0">
+                     <ToggleButton mnemonicParsing="false" text="Dark / Light"/>
+                     <Button maxWidth="1.7976931348623157E308" mnemonicParsing="false" text="Export Path"/>
+                     <Button fx:id="refreshButton" maxWidth="1.7976931348623157E308" mnemonicParsing="false"
+                             onAction="#refreshOnAction" text="Refresh Drone Information"/>
+                  </VBox>
+               </AnchorPane>
             </VBox>
          </center>
          <top>
             <AnchorPane BorderPane.alignment="CENTER">
-               <children>
-                  <Button fx:id="sideMenuCollapser" alignment="CENTER" layoutY="1.0" mnemonicParsing="false" onAction="#collapseSideMenu" prefHeight="25.0" prefWidth="25.0" style="-fx-border-color: transparent; -fx-background-color: transparent;" text="&lt;&lt;" textOverrun="CLIP" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="0.0">
-                     <font>
-                        <Font name="Consolas" size="9.0" />
-                     </font>
-                  </Button>
-               </children>
+               <Button fx:id="sideMenuCollapser" alignment="CENTER" layoutY="1.0" mnemonicParsing="false"
+                       onAction="#collapseSideMenu" prefHeight="25.0" prefWidth="25.0"
+                       style="-fx-border-color: transparent; -fx-background-color: transparent;" text="&lt;&lt;"
+                       textOverrun="CLIP" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0"
+                       AnchorPane.topAnchor="0.0">
+                  <font>
+                     <Font name="Consolas" size="9.0"/>
+                  </font>
+               </Button>
             </AnchorPane>
          </top>
       </BorderPane>
