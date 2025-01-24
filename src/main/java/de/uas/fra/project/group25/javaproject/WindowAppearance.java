@@ -15,10 +15,17 @@ public class WindowAppearance {
     private final WindowFactory windowFactory;
     private final Stage mainStage;
 
-    private WindowAppearance(Stage stage) throws IOException {
+    private WindowAppearance(Stage stage){
         this.windowFactory = new WindowFactory();
+        Parent root = null;
 
-        Parent root = new FXMLLoader(getClass().getResource("ApplicationContainer.fxml")).load();
+        try{
+            root = new FXMLLoader(getClass().getResource("ApplicationContainer.fxml")).load();
+        }catch (IOException e){
+            //must crash
+            e.printStackTrace();
+        }
+
         stage.setScene(new Scene(root, WINDOWMINWIDTH, WINDOWMINHEIGHT-40));
         stage.setMinHeight(WINDOWMINHEIGHT);
         stage.setMinWidth(WINDOWMINWIDTH);
@@ -29,7 +36,7 @@ public class WindowAppearance {
         mainStage = stage;
     }
 
-    public static WindowAppearance getInstance() throws IOException {
+    public static WindowAppearance getInstance(){
         if (windowAppearance == null) {
             windowAppearance = new WindowAppearance(new Stage());
         }

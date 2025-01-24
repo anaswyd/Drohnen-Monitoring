@@ -6,18 +6,13 @@
 <?import javafx.scene.layout.FlowPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane fx:id="sceneAnchor" prefHeight="600.0" xmlns="http://javafx.com/javafx/23.0.1"
-            xmlns:fx="http://javafx.com/fxml/1"
-            fx:controller="de.uas.fra.project.group25.javaproject.Controllers.DroneCatalogueController">
-   <Label layoutX="70.0" layoutY="59.0" text="Drone Catalogue" AnchorPane.leftAnchor="70.0" AnchorPane.topAnchor="59.0">
+<AnchorPane fx:id="catalogueSceneAnchor" prefHeight="600.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="de.uas.fra.project.group25.javaproject.Controllers.DroneCatalogueController">
+   <Label layoutX="70.0" layoutY="59.0" text="Drone Catalogue" AnchorPane.leftAnchor="70.0" AnchorPane.topAnchor="60.0">
       <font>
-         <Font name="Consolas" size="20.0"/>
+         <Font name="Consolas" size="20.0" />
       </font>
    </Label>
-   <ScrollPane fx:id="parentScroll" hbarPolicy="NEVER" maxHeight="1.7976931348623157E308"
-               maxWidth="1.7976931348623157E308" pannable="true" AnchorPane.bottomAnchor="10.0"
-               AnchorPane.leftAnchor="70.0" AnchorPane.rightAnchor="70.0" AnchorPane.topAnchor="120.0">
-      <FlowPane fx:id="parentFlow" columnHalignment="CENTER" maxHeight="1.7976931348623157E308"
-                maxWidth="1.7976931348623157E308" style="-fx-border-color: transparent;" vgap="20.0"/>
+   <ScrollPane fx:id="parentScroll" hbarPolicy="NEVER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="70.0" AnchorPane.rightAnchor="70.0" AnchorPane.topAnchor="120.0">
+      <FlowPane fx:id="parentFlow" columnHalignment="CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" style="-fx-border-color: transparent;" vgap="20.0" />
    </ScrollPane>
 </AnchorPane>

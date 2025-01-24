@@ -40,7 +40,6 @@
                         </HBox>
                         <VBox alignment="TOP_CENTER" layoutY="228.0" spacing="20.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="100.0">
                            <children>
-                              <Button maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#droneMapOnAction" text="Drone Map" />
                               <Button maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#droneListOnAction" text="Drone List" />
                               <Button maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#droneCatalogueOnAction" text="Drone Catalogue" />
                               <Button maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#droneDetailsOnAction" text="Details" />

@@ -43,13 +43,9 @@ public class DetailedCalculations {
      * @return List of distances to start. Each Element is one more timestamp away from the start.
      */
 
-    public List<Double> calculateDistance(List<String> longitudes, List<String> latitudes) {
-        List<Double> distances = new ArrayList<Double>();
-        distances.add(0.0);
-        for(int i = 0; i < longitudes.size() - 1; i++ ) {
-            distances.add(distances.getLast() + haversineEquation(Double.parseDouble(longitudes.get(i)),Double.parseDouble(latitudes.get(i)),Double.parseDouble(longitudes.get(i + 1)),Double.parseDouble(latitudes.get(i + 1))));
-        }
-        return distances;
+    public double calculateDistance(String longitude1, String latitude1 , String longitude2 , String latitude2) {
+        double distance = haversineEquation(Double.parseDouble(longitude1),Double.parseDouble(latitude1),Double.parseDouble(longitude2),Double.parseDouble(latitude2));
+        return distance;
     }
 
     /**
@@ -58,20 +54,22 @@ public class DetailedCalculations {
      * @param time_between_intervals time in seconds between interval
      * @return List of average speed for each timestamp
      */
-    public List<Double> calculateAverageSpeed(List<Double> distances, long time_between_intervals){
-        List<Double> averageSpeeds = new ArrayList<Double>();
-        int i = 0;
-        for(Double distance : distances) {
-            if(distance == 0) {
-                averageSpeeds.add(0.0);
-            }
-            else {
-                averageSpeeds.add((distance /  time_between_intervals * i)/1000);
-            }
-            i = i + 1;
-        }
-        return averageSpeeds;
-    }
+//    public List<Double calculateAverageSpeed(float totalDistance, ){
+//        double averageSpeed = 0.0;
+//        if(){
+//        double avaregeSpeed =
+//
+//
+//
+//                averageSpeeds.add(0.0);
+//            }
+//            else {
+//                averageSpeeds.add((distance /  time_between_intervals * i)/1000);
+//            }
+//            i = i + 1;
+//        }
+//        return averageSpeeds;
+//    }
 
     /**
      *

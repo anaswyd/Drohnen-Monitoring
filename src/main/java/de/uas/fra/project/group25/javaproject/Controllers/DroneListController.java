@@ -4,6 +4,7 @@ import de.uas.fra.project.group25.javaproject.Drone.Drone;
 import de.uas.fra.project.group25.javaproject.Drone.DroneStorage;
 import de.uas.fra.project.group25.javaproject.Drone.DroneType;
 import de.uas.fra.project.group25.javaproject.WindowAppearance;
+import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.geometry.Pos;
@@ -18,10 +19,12 @@ import java.net.URL;
 import java.util.ResourceBundle;
 
 public class DroneListController implements Initializable {
-
-    public AnchorPane sceneAnchor;
-    public ScrollPane parentScroll;
-    public FlowPane parentFlow;
+    @FXML
+    private AnchorPane listSceneAnchor;
+    @FXML
+    private ScrollPane parentScroll;
+    @FXML
+    private FlowPane parentFlow;
 
 
     public void createDroneElement(Drone drone){
@@ -30,8 +33,8 @@ public class DroneListController implements Initializable {
         */
 
         AnchorPane newChild = new AnchorPane();
-        newChild.setMaxSize(385, 142);
-        newChild.setPrefSize(385, 142);
+        newChild.setMaxSize(385, 182);
+        newChild.setPrefSize(385, 182);
 
         ImageView icon = new ImageView(String.valueOf(getClass().getResource("/Icons/1177291-200.png")));
         icon.setFitHeight(42);
@@ -75,7 +78,7 @@ public class DroneListController implements Initializable {
     }
 
 
-    private void fitSize() throws IOException {
+    private void fitSize(){
 
         /*
         Explanation:    1. Get BorderPane "ApplicationContainer" with "WindowAppearance.getInstance().getStage().getScene().getRoot()"
@@ -95,45 +98,22 @@ public class DroneListController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
 
-        sceneAnchor.heightProperty().addListener((observable, oldValue, newValue) -> {
+        listSceneAnchor.heightProperty().addListener((observable, oldValue, newValue) -> {
             //System.out.println("height changed");
-            try {
-                fitSize();
-            } catch (IOException e) {
-                throw new RuntimeException(e);
-            }
+            fitSize();
         });
-        sceneAnchor.widthProperty().addListener((observable, oldValue, newValue) -> {
+        listSceneAnchor.widthProperty().addListener((observable, oldValue, newValue) -> {
             //System.out.println("width changed");
-            try {
-                fitSize();
-            } catch (IOException e) {
-                throw new RuntimeException(e);
-            }
+            fitSize();
+        });
+        WindowAppearance.getInstance().getStage().heightProperty().addListener((observable, oldValue, newValue) -> {
+            //System.out.println("Window height changed");
+            fitSize();
         });
 
-        try {
-            WindowAppearance.getInstance().getStage().heightProperty().addListener((observable, oldValue, newValue) -> {
-                //System.out.println("Window height changed");
-                try {
-                    fitSize();
-                } catch (IOException e) {
-                    throw new RuntimeException(e);
-                }
-            });
-
-            WindowAppearance.getInstance().getStage().widthProperty().addListener((observable, oldValue, newValue) -> {
-                //System.out.println("Window width changed");
-                try {
-                    fitSize();
-                } catch (IOException e) {
-                    throw new RuntimeException(e);
-                }
-            });
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
-
-
+        WindowAppearance.getInstance().getStage().widthProperty().addListener((observable, oldValue, newValue) -> {
+            //System.out.println("Window width changed");
+            fitSize();
+        });
     }
 }

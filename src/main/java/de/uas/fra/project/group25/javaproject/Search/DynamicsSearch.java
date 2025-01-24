@@ -146,4 +146,8 @@ public class DynamicsSearch extends AbstractSearch{
         int count = fetchCount(HUB_URL + id + SearchType.DYNAMICS.getSearchType() + "/" );
         return new StringBuilder().append(HUB_URL).append(id).append("/?limit=").append(count).toString();
     }
+
+    public long getTimestampDifference() {
+        return timestampDifference;
+    }
 }

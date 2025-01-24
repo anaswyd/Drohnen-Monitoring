@@ -1,6 +1,7 @@
 package de.uas.fra.project.group25.javaproject.ApiConnector;
 
 import de.uas.fra.project.group25.javaproject.Drone.Drone;
+import de.uas.fra.project.group25.javaproject.Drone.DroneDetailRow;
 import de.uas.fra.project.group25.javaproject.Drone.DroneDynamic;
 import de.uas.fra.project.group25.javaproject.Drone.DroneType;
 import de.uas.fra.project.group25.javaproject.Search.DroneDataSearch;
@@ -10,6 +11,7 @@ import de.uas.fra.project.group25.javaproject.Search.WrongSearchTypeException;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
@@ -17,6 +19,7 @@ import java.util.List;
 public class ApiAccess  {
     private final HashMap<Integer ,Drone> outputDrones ;
     private final HashMap<Integer, DroneType> outputCatalogue ;
+    private final List<DroneDetailRow> specificDynamics;
     private final ApiConnector apiConnector;
     private final DroneDataSearch drone_type;
     private final DroneDataSearch droneType_type;
@@ -29,6 +32,7 @@ public class ApiAccess  {
         this.apiConnector = new ApiConnector();
         this.outputDrones  = new HashMap<Integer, Drone>();
         this.outputCatalogue = new HashMap<Integer,DroneType>();
+        this.specificDynamics = new ArrayList<DroneDetailRow>();
         this.drone_type = new DroneDataSearch(SearchType.DRONE);
         this.droneType_type = new DroneDataSearch(SearchType.DRONETYPE);
         this.dynamic_type = new DynamicsSearch(SearchType.DYNAMICS);
@@ -131,17 +135,26 @@ public class ApiAccess  {
      * @param drone_id id of the drone
      * @return JSONObject for details
      */
-    private JSONObject fetchDynamics(int drone_id){
+    public void fetchDynamics(int drone_id){
+        JSONObject jsonObject = null;
         try {
             String relevantPage = this.dynamic_type.findDetailedRelevantPage(drone_id);
             StringBuilder droneTableAsJson = apiConnector.connect(relevantPage);
-            JSONObject wholeFile = new JSONObject(droneTableAsJson.toString());
-            return wholeFile;
+            jsonObject = new JSONObject(droneTableAsJson.toString());
         } catch (WrongSearchTypeException e) {
             throw new RuntimeException(e);
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
+
+        this.specificDynamics.clear();
+        this.specificDynamics.add(new DroneDetailRow());
+        JSONArray jsonArray = jsonObject.getJSONArray("results");
+        long timeStampDifference = this.dynamic_type.getTimestampDifference();
+        jsonArray.forEach(item -> {
+            this.specificDynamics.add(new DroneDetailRow(((JSONObject) item), this.specificDynamics.getLast(), timeStampDifference));
+        });
+
     }
 
     public HashMap<Integer, DroneType> getOutputCatalogue() {
@@ -150,6 +163,10 @@ public class ApiAccess  {
 
     public HashMap<Integer, Drone> getOutputDrone() {
         return outputDrones;
+    }
+
+    public List<DroneDetailRow> getSpecificDynamic() {
+        return this.specificDynamics;
     }
 
 
@@ -219,9 +236,6 @@ public class ApiAccess  {
             throw new RuntimeException(e);
         }
     }
-
-
-
 }
 
 
