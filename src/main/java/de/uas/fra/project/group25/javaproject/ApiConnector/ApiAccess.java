@@ -146,7 +146,6 @@ public class ApiAccess  {
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
-
         this.specificDynamics.clear();
         this.specificDynamics.add(new DroneDetailRow());
         JSONArray jsonArray = jsonObject.getJSONArray("results");
@@ -154,6 +153,7 @@ public class ApiAccess  {
         jsonArray.forEach(item -> {
             this.specificDynamics.add(new DroneDetailRow(((JSONObject) item), this.specificDynamics.getLast(), timeStampDifference));
         });
+        this.specificDynamics.removeFirst();
 
     }
 

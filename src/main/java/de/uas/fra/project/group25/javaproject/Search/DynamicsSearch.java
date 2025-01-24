@@ -32,7 +32,7 @@ public class DynamicsSearch extends AbstractSearch{
      * @return returns the count on the json file
      */
     private int fetchCount (String link){
-        StringBuilder response = new StringBuilder("lol");
+        StringBuilder response = new StringBuilder();
         try {
             response = this.apiConnector.connect(link);
         } catch (Exception e) {
@@ -143,8 +143,9 @@ public class DynamicsSearch extends AbstractSearch{
      * @return link where the dynamics can be downloaded from
      */
     public String findDetailedRelevantPage(int id){
-        int count = fetchCount(HUB_URL + id + SearchType.DYNAMICS.getSearchType() + "/" );
-        return new StringBuilder().append(HUB_URL).append(id).append("/?limit=").append(count).toString();
+        int count = fetchCount(HUB_URL + id +  "/dynamics/" );
+        String temp = new StringBuilder().append(HUB_URL).append(id).append("/dynamics/?limit=").append(count).toString();
+        return temp;
     }
 
     public long getTimestampDifference() {

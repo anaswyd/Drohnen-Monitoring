@@ -18,6 +18,7 @@ import javafx.scene.layout.VBox;
 import org.json.JSONObject;
 
 import java.net.URL;
+import java.util.List;
 import java.util.ResourceBundle;
 
 public class DroneDetailsController implements Initializable {
@@ -30,21 +31,21 @@ public class DroneDetailsController implements Initializable {
     private AnchorPane detailsSceneAnchor;
 
     @FXML
-    private TableColumn<DroneDetailRow, String> colLat;
+    private TableColumn<DroneDetailRow, Double> colLat;
     @FXML
-    private TableColumn<DroneDetailRow, String> colLong;
+    private TableColumn<DroneDetailRow, Double> colLong;
     @FXML
-    private TableColumn<DroneDetailRow, String> colTotalDistance;
+    private TableColumn<DroneDetailRow, Double> colTotalDistance;
     @FXML
-    private TableColumn<DroneDetailRow, String> colAvgSpeed;
+    private TableColumn<DroneDetailRow, Double> colAvgSpeed;
     @FXML
     private TableColumn<DroneDetailRow, String> colStatus;
     @FXML
-    private TableColumn<DroneDetailRow, String> colTotalActiveTime;
+    private TableColumn<DroneDetailRow, Long> colTotalActiveTime;
     @FXML
-    private TableColumn<DroneDetailRow, String> colBattery;
+    private TableColumn<DroneDetailRow, Integer> colBattery;
     @FXML
-    private TableColumn<DroneDetailRow, String> colTotalBattery;
+    private TableColumn<DroneDetailRow, Long> colTotalBattery;
 
 
     public final ToggleGroup detailSelector = new ToggleGroup();
@@ -56,11 +57,10 @@ public class DroneDetailsController implements Initializable {
         parentTable.getItems().clear();
 
         Thread thread = new Thread(() -> {
-            //DroneStorage.getInstance().getDetails(id);
-            DroneDetailRow newRow = new DroneDetailRow();
+            List<DroneDetailRow> rows = DroneStorage.getInstance().getDetails(id);
             Platform.runLater(() -> {
-                for (int i = 0; i < 10; i++) {
-                    parentTable.getItems().add(newRow);
+                for (DroneDetailRow row : rows) {
+                    parentTable.getItems().add(row);
                 }
             });
         });
@@ -125,13 +125,13 @@ public class DroneDetailsController implements Initializable {
 //            //System.out.println("Window width changed");
 //            fitSize();
 //        });
-        colLat.setCellValueFactory(new PropertyValueFactory<DroneDetailRow, String>("latitude"));
-        colLong.setCellValueFactory(new PropertyValueFactory<DroneDetailRow, String>("longitude"));
-        colTotalDistance.setCellValueFactory(new PropertyValueFactory<DroneDetailRow, String>("totalDistance"));
-        colAvgSpeed.setCellValueFactory(new PropertyValueFactory<DroneDetailRow, String>("averageSpeed"));
+        colLat.setCellValueFactory(new PropertyValueFactory<DroneDetailRow, Double>("latitude"));
+        colLong.setCellValueFactory(new PropertyValueFactory<DroneDetailRow, Double>("longitude"));
+        colTotalDistance.setCellValueFactory(new PropertyValueFactory<DroneDetailRow, Double>("totalDistance"));
+        colAvgSpeed.setCellValueFactory(new PropertyValueFactory<DroneDetailRow, Double>("averageSpeed"));
         colStatus.setCellValueFactory(new PropertyValueFactory<DroneDetailRow, String>("status"));
-        colTotalActiveTime.setCellValueFactory(new PropertyValueFactory<DroneDetailRow, String>("totalActiveTime"));
-        colBattery.setCellValueFactory(new PropertyValueFactory<DroneDetailRow, String>("batteryStatus"));
-        colTotalBattery.setCellValueFactory(new PropertyValueFactory<DroneDetailRow, String>("totalBatteryConsumption"));
+        colTotalActiveTime.setCellValueFactory(new PropertyValueFactory<DroneDetailRow, Long>("totalActiveTime"));
+        colBattery.setCellValueFactory(new PropertyValueFactory<DroneDetailRow, Integer>("batteryStatus"));
+        colTotalBattery.setCellValueFactory(new PropertyValueFactory<DroneDetailRow, Long>("totalBatteryConsumption"));
     }
 }

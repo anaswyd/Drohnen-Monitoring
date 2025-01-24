@@ -12,6 +12,7 @@ import org.json.JSONObject;
 
 import java.io.IOException;
 import java.util.HashMap;
+import java.util.List;
 
 public class DroneStorage {
 
@@ -108,19 +109,17 @@ public class DroneStorage {
         return outputDrone;
     }
 
-//    public JSONObject getDetails(int id){
-//        if(!this.updating){
-//            updating = true;
-//            //display fetching ...
-//            this.apiAccess.fetchDynamics(id);
-//            JSONObject details = this.apiAccess.getSpecificDynamic();
-//            updating = false;
-//            //display fetched data (replace {} with display method)
-//
-//        }
-//
-//        return null;
-//    }
+    public List<DroneDetailRow> getDetails(int id){
+        List<DroneDetailRow> details = null;
+        if(!this.updating){
+            updating = true;
+            this.apiAccess.fetchDynamics(id);
+            details = this.apiAccess.getSpecificDynamic();
+            updating = false;
+        }
+
+        return details;
+    }
 
 
 }
