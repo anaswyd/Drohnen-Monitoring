@@ -29,7 +29,7 @@ public class DroneDetailRow {
     public DroneDetailRow(JSONObject jsonObject, DroneDetailRow previousRow, long timeStampDifference) {
         this.latitude = Double.parseDouble((jsonObject.getString("latitude")));
         this.longitude = Double.parseDouble(jsonObject.getString("longitude"));
-        this.totalDistance = haversineEquation(this.longitude, this.latitude, previousRow.getLongitude(), previousRow.getLongitude());
+        this.totalDistance = (haversineEquation(this.longitude, this.latitude, previousRow.getLongitude(), previousRow.getLatitude()) + previousRow.getTotalDistance());
         this.status = jsonObject.getString("status");
         this.totalActiveTime = calculateActiveTime(previousRow.getStatus(), previousRow.getTotalActiveTime(), timeStampDifference);
         this.averageSpeed = calculateAverageSpeed(this.totalDistance, this.totalActiveTime);
@@ -47,7 +47,10 @@ public class DroneDetailRow {
      * @return kilometer from point one to point two
      */
     private double haversineEquation(double lon1 ,double lat1 ,double lon2 ,double lat2){
-
+        //we don't need to calculate the  distance for the first object because it is 0
+        if(lon2 == 0 && lat2 == 0){
+            return 0.0;
+        }
         //transform to radians
         double lon1Rad = Math.toRadians(lon1);
         double lat1Rad = Math.toRadians(lat1);
@@ -159,4 +162,13 @@ public class DroneDetailRow {
     }
 
     public String getTimestamp() {return timestamp;}
+
+    @Override
+    public String toString(){
+        return ((new StringBuilder(getTimestamp()).append(";").append(getLongitude()).append(";").append(getLatitude())
+                .append(";").append(getTotalDistance()).append(";").append(getAverageSpeed()).append(";").append(getStatus())
+                .append(";").append(getTotalActiveTime()).append(";").append(getBatteryStatus()).append(";")
+                .append(getTotalBatteryConsumption()).append(";")).toString());
+
+    }
 }

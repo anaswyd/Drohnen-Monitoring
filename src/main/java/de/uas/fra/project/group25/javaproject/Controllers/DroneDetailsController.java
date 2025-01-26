@@ -14,6 +14,10 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.VBox;
 
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.FileWriter;
+import java.io.PrintWriter;
 import java.net.URL;
 import java.util.List;
 import java.util.ResourceBundle;
@@ -62,6 +66,18 @@ public class DroneDetailsController implements Initializable {
                     parentTable.getItems().add(row);
                 }
             });
+            PrintWriter tablesave = null;
+            try{
+                tablesave = new PrintWriter(new FileWriter("drone_details" + id + ".csv"));
+                for (DroneDetailRow row : rows) {
+                    tablesave.println(row.toString());
+                }
+            }catch (Exception e){
+                e.printStackTrace();
+            }
+            finally {
+                tablesave.close();
+            }
         });
         thread.start();
     }
