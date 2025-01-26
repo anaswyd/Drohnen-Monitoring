@@ -11,8 +11,7 @@ import java.util.Objects;
 public class DynamicsSearch extends AbstractSearch{
     private int droneCount;
     private long timestampDifference;
-    private long starttime;
-    private long endtime;
+    private long startTime;
 
     /**
      * creates a DynamicsSearch
@@ -65,15 +64,15 @@ public class DynamicsSearch extends AbstractSearch{
     /**
      * calculates the time between 2 given timestamps by tranforming them into unix time and then subtracting them
      * @param pages number of pages
-     * @param starttime first timestamp of the json document
-     * @param endtime last timestamp of the json document
+     * @param startTime first timestamp of the json document
+     * @param endTime last timestamp of the json document
      */
-    private void calculateTimestampDifference(int pages, String starttime, String endtime){
+    private void calculateTimestampDifference(int pages, String startTime, String endTime){
         //transform timestamp in long so we can calculate
-        this.starttime = timeToSeconds(starttime);
-        this.endtime = timeToSeconds(endtime);
+        this.startTime = timeToSeconds(startTime);
+        long endTimeLong = timeToSeconds(endTime);
         //mean is the time between timestamps because this time is consistent
-        this.timestampDifference = (long) ((this.endtime - this.starttime)/pages);
+        this.timestampDifference = (long) ((endTimeLong - this.startTime)/pages);
     }
 
     /**
@@ -88,7 +87,7 @@ public class DynamicsSearch extends AbstractSearch{
         relevantPages.add(new StringBuilder().append(START_URL).append("/?limit=").append(droneCount).toString());
         //System.out.println(relevantPages);
         JSONObject firstJson = null;
-        JSONObject lastJson = null;
+        JSONObject lastJson;
         String firstTimeStamp = "";
         String lastTimeStamp = "";
         try {
@@ -106,7 +105,7 @@ public class DynamicsSearch extends AbstractSearch{
         }catch(Exception e){
             e.printStackTrace();
         }
-            //System.out.println(apiConnector.connect(relevantPages.get(1).toString()));
+        //System.out.println(apiConnector.connect(relevantPages.get(1).toString()));
 
         //retrieve last timestamp
         try {
@@ -132,7 +131,7 @@ public class DynamicsSearch extends AbstractSearch{
      */
     public String findTimestampedRelevantPage(String timestamp){
         //
-        int offset = (int) (((timeToSeconds(timestamp) - this.starttime) / timestampDifference) * droneCount);
+        int offset = (int) (((timeToSeconds(timestamp) - this.startTime) / timestampDifference) * droneCount);
         StringBuilder page = new StringBuilder().append(START_URL).append("/?limit=").append(droneCount).append("&offset=").append(offset);
         return page.toString();
     }

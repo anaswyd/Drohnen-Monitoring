@@ -9,7 +9,7 @@ import java.io.IOException;
 public class Launcher extends Application {
     @Override
     public void start(Stage stage) throws IOException {
-        DroneStorage.getInstance().getDroneCatalogue();
+        DroneStorage.getInstance();
         WindowAppearance.getInstance();
     }
 

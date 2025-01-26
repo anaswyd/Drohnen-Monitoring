@@ -3,6 +3,7 @@ package de.uas.fra.project.group25.javaproject.ApiConnector;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.net.ConnectException;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
@@ -30,12 +31,10 @@ public class ApiConnector {
             connection.setRequestProperty("User-Agent", USER_AGENT);
 
             int responseCode = connection.getResponseCode();
-
             if(responseCode != HttpURLConnection.HTTP_OK){
                 throw new ResponseException("HTTP connection mistake: ",responseCode) ;
             }
 
-            //System.out.println("Response Code " + responseCode); //Response Code handle???
             BufferedReader in = new BufferedReader(new InputStreamReader(connection.getInputStream()));
             String inputLine;
             response = new StringBuilder();
@@ -51,15 +50,10 @@ public class ApiConnector {
         } catch (MalformedURLException e) {
             System.err.println("Malformed URL: " + e.getLocalizedMessage());
             e.printStackTrace();
-        /*} catch (ConnectException e) { //Exception not connecting possible
-            System.out.println("Connection not possible: " + e.getLocalizedMessage());
-            e.printStackTrace(); */
-        } catch (IOException e) {
-            System.out.println("General IO Exception: " + e.getLocalizedMessage());
-            e.printStackTrace();
+        } catch (ConnectException e) {
+            //Exception occurs if User is not connected to the VPN
+            throw new VpnConnectionException();
         }
-
-
         return response;
     }
 }

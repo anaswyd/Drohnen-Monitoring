@@ -75,22 +75,23 @@ public class DroneDetailRow {
     }
 
     /**
-     *
-     * @param status List of Status for each timestamp
-     * @param time_between_intervals
-     * @return
+     * adds 1 * timeBetweenIntervals if previous status was 'ON'
+     * @param previousStatus status from the last timestamp
+     * @param previousActiveTime active time of the previous timestamp
+     * @param timeBetweenIntervals constant time between intervals
+     * @return updated total active time
      */
-    private long calculateActiveTime(String status, long previousActiveTime, long time_between_intervals){
+    private long calculateActiveTime(String previousStatus, long previousActiveTime, long timeBetweenIntervals){
         long activeTime = 0;
-        switch(status) {
+        switch(previousStatus) {
             case "ON":
-                activeTime = previousActiveTime + time_between_intervals;
+                activeTime = previousActiveTime + timeBetweenIntervals;
                 break;
             case "OF":
                 activeTime = previousActiveTime;
                 break;
             case "IS":
-                //we decided that issues count as inactive time for now
+                //we decided that issues count as inactive time
                 activeTime = previousActiveTime;
                 break;
         }
@@ -100,10 +101,10 @@ public class DroneDetailRow {
 
 
     /**
-     * calculates average speed over time as m/s for each time stamp
-     * @param distances List of all distances
-     * @param time_between_intervals time in seconds between interval
-     * @return List of average speed for each timestamp
+     * calculates average speed by (total distance / total active time)
+     * @param totalDistance distance travelled so far
+     * @param totalActiveTime time drone was active
+     * @return returns the average speed
      */
     private Double calculateAverageSpeed(double totalDistance, long totalActiveTime){
         double averageSpeed = 0.0;
@@ -115,12 +116,15 @@ public class DroneDetailRow {
 
 
     /**
-     * Calculates for each drone the batteryusage
-     * @param battery_status
-     * @return
+     * Calculates the total used battery
+     * @param batteryStatus current battery status
+     * @param previousBatteryStatus battery status from the previous timestamp
+     * @param totalBatteryConsumption total battery used so far
+     * @return total battery used so far plus battery used since the last timestamp
      */
     private long calculateBatteryUsage(int batteryStatus, int previousBatteryStatus, long totalBatteryConsumption) {
-        //calculate batteryusage
+        //calculate battery usage
+        //if drone was charged it has a higher status than the previous timestamp so we don't need to add a negative number
         if(batteryStatus < previousBatteryStatus){
             totalBatteryConsumption = totalBatteryConsumption + ( previousBatteryStatus - batteryStatus );
         }
@@ -163,6 +167,11 @@ public class DroneDetailRow {
 
     public String getTimestamp() {return timestamp;}
 
+
+    /**
+     * toString got overwritten so it now outputs in a form usable for csv
+     * @return attributes as String seperated by ';'
+     */
     @Override
     public String toString(){
         return ((new StringBuilder(getTimestamp()).append(";").append(getLongitude()).append(";").append(getLatitude())

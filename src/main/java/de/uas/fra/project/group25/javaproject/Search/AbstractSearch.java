@@ -12,7 +12,7 @@ public abstract class AbstractSearch {
     protected static final String TYPE_CHECK = SearchType.DYNAMICS.getSearchType();
     protected static final String HUB_URL = "http://dronesim.facets-labs.com/api/";
     protected final String START_URL;
-    protected String currentPage = "";
+    protected String currentPage;
     protected ApiConnector apiConnector = new ApiConnector();
 
     public AbstractSearch(SearchType searchType){
