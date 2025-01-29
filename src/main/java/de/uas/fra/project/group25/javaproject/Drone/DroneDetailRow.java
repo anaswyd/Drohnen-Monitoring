@@ -109,7 +109,8 @@ public class DroneDetailRow {
     private Double calculateAverageSpeed(double totalDistance, long totalActiveTime){
         double averageSpeed = 0.0;
         if(totalActiveTime != 0){
-            averageSpeed = (totalDistance/1000)/ totalActiveTime;
+            //calculate speed as km/h
+            averageSpeed = (totalDistance/ (totalActiveTime/3600.0));
         }
         return averageSpeed;
     }

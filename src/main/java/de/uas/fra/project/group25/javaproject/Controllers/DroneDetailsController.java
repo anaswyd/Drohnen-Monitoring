@@ -68,7 +68,7 @@ public class DroneDetailsController implements Initializable {
             });
             PrintWriter tablesave = null;
             try{
-                tablesave = new PrintWriter(new FileWriter("drone_details" + id + ".csv"));
+                tablesave = new PrintWriter(new FileWriter("./DroneDetailCSVs/drone_details" + id + ".csv"));
                 for (DroneDetailRow row : rows) {
                     tablesave.println(row.toString());
                 }

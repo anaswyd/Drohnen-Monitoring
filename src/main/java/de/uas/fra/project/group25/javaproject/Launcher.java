@@ -9,8 +9,8 @@ import java.io.IOException;
 public class Launcher extends Application {
     @Override
     public void start(Stage stage) throws IOException {
-        DroneStorage.getInstance();
         WindowAppearance.getInstance();
+        DroneStorage.getInstance();
     }
 
     public static void main(String[] args) {
