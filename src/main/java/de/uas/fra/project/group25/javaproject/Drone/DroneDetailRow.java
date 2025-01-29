@@ -13,6 +13,11 @@ public class DroneDetailRow {
     private final int batteryStatus;
     private final long totalBatteryConsumption;
     private final String timestamp;
+    private final Integer speed;
+    private final String lastSeen;
+    private final String alignRoll;
+    private final String alignPitch;
+    private final String alignYaw;
 
     public DroneDetailRow(){
         this.latitude = 0.0;
@@ -24,6 +29,11 @@ public class DroneDetailRow {
         this.batteryStatus = 0;
         this.totalBatteryConsumption = 0;
         this.timestamp = "";
+        this.speed = 0;
+        this.lastSeen = "";
+        this.alignRoll = "";
+        this.alignPitch = "";
+        this.alignYaw = "";
     }
 
     public DroneDetailRow(JSONObject jsonObject, DroneDetailRow previousRow, long timeStampDifference) {
@@ -36,6 +46,11 @@ public class DroneDetailRow {
         this.batteryStatus = jsonObject.getInt("battery_status");
         this.totalBatteryConsumption = calculateBatteryUsage(this.batteryStatus, previousRow.getBatteryStatus(),previousRow.getTotalBatteryConsumption());
         this.timestamp = jsonObject.getString("timestamp");
+        this.speed = jsonObject.getInt("speed");
+        this.lastSeen = jsonObject.getString("last_seen");
+        this.alignRoll = jsonObject.getString("align_roll");
+        this.alignPitch = jsonObject.getString("align_pitch");
+        this.alignYaw = jsonObject.getString("align_yaw");
     }
 
     /**
@@ -168,6 +183,15 @@ public class DroneDetailRow {
 
     public String getTimestamp() {return timestamp;}
 
+    public Integer getSpeed() {return speed;}
+
+    public String getLastSeen() {return lastSeen;}
+
+    public String getAlignRoll() {return alignRoll;}
+
+    public String getAlignPitch() {return alignPitch;}
+
+    public String getAlignYaw() {return alignYaw;}
 
     /**
      * toString got overwritten so it now outputs in a form usable for csv
@@ -175,10 +199,10 @@ public class DroneDetailRow {
      */
     @Override
     public String toString(){
-        return ((new StringBuilder(getTimestamp()).append(";").append(getLongitude()).append(";").append(getLatitude())
-                .append(";").append(getTotalDistance()).append(";").append(getAverageSpeed()).append(";").append(getStatus())
-                .append(";").append(getTotalActiveTime()).append(";").append(getBatteryStatus()).append(";")
-                .append(getTotalBatteryConsumption()).append(";")).toString());
+        return ((new StringBuilder(getTimestamp()).append(";").append(getLastSeen()).append(";").append(getSpeed()).append(";").append(getLongitude()).append(";")
+                .append(getLatitude()).append(";").append(getTotalDistance()).append(";").append(getAverageSpeed()).append(";").append(getStatus()).append(";")
+                .append(getTotalActiveTime()).append(";").append(getBatteryStatus()).append(";").append(getTotalBatteryConsumption()).append(";")
+                .append(getAlignRoll()).append(";").append(getAlignPitch()).append(";").append(getAlignYaw()).append(";")).toString());
 
     }
 }

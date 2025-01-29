@@ -34,6 +34,10 @@ public class DroneDetailsController implements Initializable {
     @FXML
     private TableColumn<DroneDetailRow, String> colTimestamp;
     @FXML
+    private TableColumn<DroneDetailRow, String> colLastSeen;
+    @FXML
+    private TableColumn<DroneDetailRow, Integer> colSpeed;
+    @FXML
     private TableColumn<DroneDetailRow, Double> colLat;
     @FXML
     private TableColumn<DroneDetailRow, Double> colLong;
@@ -49,6 +53,13 @@ public class DroneDetailsController implements Initializable {
     private TableColumn<DroneDetailRow, Integer> colBattery;
     @FXML
     private TableColumn<DroneDetailRow, Long> colTotalBattery;
+    @FXML
+    private TableColumn<DroneDetailRow, String> colARoll;
+    @FXML
+    private TableColumn<DroneDetailRow, String> colAPitch;
+    @FXML
+    private TableColumn<DroneDetailRow, String> colAYaw;
+
 
 
     public final ToggleGroup detailSelector = new ToggleGroup();
@@ -105,6 +116,8 @@ public class DroneDetailsController implements Initializable {
     public void initialize(URL url, ResourceBundle resourceBundle) {
 
         colTimestamp.setCellValueFactory(new PropertyValueFactory<DroneDetailRow, String>("timestamp"));
+        colLastSeen.setCellValueFactory(new PropertyValueFactory<DroneDetailRow, String>("lastSeen"));
+        colSpeed.setCellValueFactory(new PropertyValueFactory<DroneDetailRow, Integer>("speed"));
         colLat.setCellValueFactory(new PropertyValueFactory<DroneDetailRow, Double>("latitude"));
         colLong.setCellValueFactory(new PropertyValueFactory<DroneDetailRow, Double>("longitude"));
         colTotalDistance.setCellValueFactory(new PropertyValueFactory<DroneDetailRow, Double>("totalDistance"));
@@ -113,5 +126,8 @@ public class DroneDetailsController implements Initializable {
         colTotalActiveTime.setCellValueFactory(new PropertyValueFactory<DroneDetailRow, Long>("totalActiveTime"));
         colBattery.setCellValueFactory(new PropertyValueFactory<DroneDetailRow, Integer>("batteryStatus"));
         colTotalBattery.setCellValueFactory(new PropertyValueFactory<DroneDetailRow, Long>("totalBatteryConsumption"));
+        colARoll.setCellValueFactory(new PropertyValueFactory<DroneDetailRow, String>("alignRoll"));
+        colAPitch.setCellValueFactory(new PropertyValueFactory<DroneDetailRow, String>("alignPitch"));
+        colAYaw.setCellValueFactory(new PropertyValueFactory<DroneDetailRow, String>("alignYaw"));
     }
 }
