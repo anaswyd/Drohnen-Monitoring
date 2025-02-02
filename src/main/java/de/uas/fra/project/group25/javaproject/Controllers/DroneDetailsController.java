@@ -11,25 +11,23 @@ import javafx.geometry.NodeOrientation;
 import javafx.geometry.Pos;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
-import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.VBox;
 
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
 import java.io.FileWriter;
 import java.io.PrintWriter;
 import java.net.URL;
 import java.util.List;
 import java.util.ResourceBundle;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class DroneDetailsController implements Initializable {
 
+    private final Logger logger = Logger.getLogger(this.getClass().getName());
     @FXML
     private VBox parentV;
     @FXML
     private TableView<DroneDetailRow> parentTable;
-    @FXML
-    private AnchorPane detailsSceneAnchor;
 
     @FXML
     private TableColumn<DroneDetailRow, String> colTimestamp;
@@ -60,61 +58,77 @@ public class DroneDetailsController implements Initializable {
     @FXML
     private TableColumn<DroneDetailRow, String> colAYaw;
 
-
-
     public final ToggleGroup detailSelector = new ToggleGroup();
 
 
-
-
+    /**
+     * Method that is called when a Drone is selected in the "Drone Details" Scene
+     * Fetches and Displays every Drone Dynamic of the selected Drone
+     * @param id ID of the selected drone
+     */
     public void selectOnAction(int id){
+        //Begin on empty table
         parentTable.getItems().clear();
 
         Thread thread = new Thread(() -> {
+            //Fetch relevant information
             List<DroneDetailRow> rows = DroneStorage.getInstance().getDetails(id);
             Platform.runLater(() -> {
                 for (DroneDetailRow row : rows) {
+                    //Create row for each drone dynamic that is fetched
                     parentTable.getItems().add(row);
                 }
             });
+
             PrintWriter tablesave = null;
             try{
+                //Saves the drone details as a csv file
                 tablesave = new PrintWriter(new FileWriter("./DroneDetailCSVs/drone_details" + id + ".csv"));
                 for (DroneDetailRow row : rows) {
                     tablesave.println(row.toString());
                 }
             }catch (Exception e){
-                e.printStackTrace();
+                logger.log(Level.WARNING, "Could not create CSV File of Drone Detail with ID " + id);
             }
             finally {
+                assert tablesave != null;
                 tablesave.close();
             }
         });
         thread.start();
     }
 
+    /**
+     * Create RadioButtons from passed ID for the right side menu
+     * @param droneID ID of Drone
+     */
     public void createDroneElement(int droneID){
+        //Base of new element
         RadioButton newChild = new RadioButton("Drone " + droneID);
         newChild.setId(String.valueOf(droneID));
         newChild.setPrefSize(180, 20);
         newChild.setNodeOrientation(NodeOrientation.valueOf("RIGHT_TO_LEFT"));
         newChild.setAlignment(Pos.valueOf("CENTER_RIGHT"));
 
+        //Define what happens when element is selected
         newChild.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent actionEvent) {
                 selectOnAction(Integer.parseInt(newChild.getId()));
             }
         });
+
+        //Set ToggleGroup of child so that only one of the element can be selected
         newChild.setToggleGroup(detailSelector);
+
+        //Add new child to list
         parentV.getChildren().add(newChild);
     }
-
-
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
 
+        //Relate attributes to columns
         colTimestamp.setCellValueFactory(new PropertyValueFactory<DroneDetailRow, String>("timestamp"));
         colLastSeen.setCellValueFactory(new PropertyValueFactory<DroneDetailRow, String>("lastSeen"));
         colSpeed.setCellValueFactory(new PropertyValueFactory<DroneDetailRow, Integer>("speed"));

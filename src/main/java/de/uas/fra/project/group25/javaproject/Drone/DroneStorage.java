@@ -13,6 +13,7 @@ import org.json.JSONObject;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.List;
+import java.util.logging.Logger;
 
 public class DroneStorage {
 
@@ -49,6 +50,7 @@ public class DroneStorage {
 
             //create a thread that updates the data
             Thread thread = new Thread(() -> {
+
                 apiAccess.update();
                 //check what the current screen is
 
@@ -111,9 +113,13 @@ public class DroneStorage {
 
     public List<DroneDetailRow> getDetails(int id){
         List<DroneDetailRow> details = null;
-        if(!this.updating){
+        if(!this.updating) {
             updating = true;
-            this.apiAccess.fetchDynamics(id);
+            try {
+                this.apiAccess.fetchDynamics(id);
+            }catch (Exception e){
+                return null;
+            }
             details = this.apiAccess.getSpecificDynamic();
             updating = false;
         }

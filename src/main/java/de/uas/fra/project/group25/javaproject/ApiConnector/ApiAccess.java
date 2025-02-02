@@ -14,6 +14,8 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 
 public class ApiAccess  {
@@ -24,6 +26,7 @@ public class ApiAccess  {
     private final DroneDataSearch drone_type;
     private final DroneDataSearch droneType_type;
     private final DynamicsSearch dynamic_type;
+    protected Logger logger = Logger.getLogger(this.getClass().getName());
 
     /**
      * constructor of ApiAccess
@@ -44,22 +47,43 @@ public class ApiAccess  {
      */
 
     public void update(){
-        fetchCatalogue();
-        fetchDrones();
-        fetchStartEndDynamics();
+        logger.log(Level.INFO, "Updating api access");
+        try {
+            fetchCatalogue();
+            logger.log(Level.INFO, "Catalogue updated");
+            fetchDrones();
+            logger.log(Level.INFO, "Drones updated");
+            fetchStartEndDynamics();
+            logger.log(Level.INFO, "DroneDynamics updated");
+            logger.log(Level.INFO, "Updated api access finished");
+        } catch (Exception ex) {
+            logger.log(Level.SEVERE, "Error updating api access");
+        }
+
     }
 
     /**
      * fetches all drones by calling the ApiConnector with suitable links, creates a (Drone) object for each
      * drone and populates the (outputDrones) map with these Drone objects, using their IDs as keys
      */
-    private void fetchDrones() {
+    private void fetchDrones() throws Exception{
         this.outputDrones.clear();
+        List<String> relevantPages = null;
         try {
-            List<String> relevantPages = this.drone_type.findRelevantPages();
-            outputDrones.clear(); //Leeren der Liste
+            relevantPages = this.drone_type.findRelevantPages();
+        }catch (Exception e){
+            logger.log(Level.SEVERE, e.getMessage());
+            throw e;
+        }
+        outputDrones.clear(); //Leeren der Liste
+        StringBuilder droneTableAsJson;
             for(String page : relevantPages) {
-                StringBuilder droneTableAsJson = apiConnector.connect(page);
+                try{
+                    droneTableAsJson= apiConnector.connect(page);
+                } catch (Exception e) {
+                    logger.log(Level.SEVERE, e.getMessage());
+                    throw e;
+                }
                 JSONObject wholeFile = new JSONObject(droneTableAsJson.toString());
                 JSONArray jsonFile = wholeFile.getJSONArray("results");
                 JSONObject o;
@@ -79,15 +103,6 @@ public class ApiAccess  {
                     outputDrones.put(id,drone);
                 }
             }
-        } catch (WrongSearchTypeException e) {
-            throw new RuntimeException(e);
-        }
-        catch (ResponseException e){
-            throw new RuntimeException(e);
-        }
-        catch (Exception e){
-            throw new RuntimeException(e);
-        }
     }
 
     /**
@@ -95,38 +110,40 @@ public class ApiAccess  {
      * drone type and populates the (outputCatalogue) map with these DroneType objects, using their IDs as keys
      */
 
-    private void fetchCatalogue() {
+    private void fetchCatalogue() throws Exception {
         this.outputCatalogue.clear();
+        List<String> relevantPages = null;
         try {
-            List<String> relevantPages = this.droneType_type.findRelevantPages();
-            outputCatalogue.clear(); //Leeren der Liste
-            for(String page : relevantPages) {
-                StringBuilder droneTableAsJson = this.apiConnector.connect(page);
-                JSONObject wholeFile = new JSONObject(droneTableAsJson.toString());
-                JSONArray jsonFile = wholeFile.getJSONArray("results");
-                JSONObject o;
-                for (int i = 0; i < jsonFile.length(); i++) {
-                    o = jsonFile.getJSONObject(i);
-                    int id=o.getInt("id");
-                    int battery_capacity=o.getInt("battery_capacity");
-                    int control_range=o.getInt("control_range");
-                    int weight=o.getInt("weight");
-                    int max_carriage=o.getInt("max_carriage");
-                    int max_speed=o.getInt("max_speed");
-                    String manufacturer=o.getString("manufacturer");
-                    String typename=o.getString("typename");
-                    DroneType droneType = new DroneType(id,typename,manufacturer,weight,max_speed,battery_capacity,control_range,max_carriage);
-                    outputCatalogue.put(id,droneType);
-                }
+            relevantPages = this.droneType_type.findRelevantPages();
+        }catch (WrongSearchTypeException e) {
+            logger.log(Level.SEVERE,e.getMessage());
+            throw e;
+        }
+        outputCatalogue.clear(); //Leeren der Liste
+        StringBuilder droneTableAsJson;
+        for(String page : relevantPages) {
+            try {
+                droneTableAsJson = this.apiConnector.connect(page);
+            }catch (Exception e) {
+                logger.log(Level.SEVERE, e.getMessage());
+                throw e;
             }
-        } catch (WrongSearchTypeException e) {
-            throw new RuntimeException(e);
-        }
-        catch (ResponseException e){
-            throw new RuntimeException(e);
-        }
-        catch (Exception e){
-            throw new RuntimeException(e);
+            JSONObject wholeFile = new JSONObject(droneTableAsJson.toString());
+            JSONArray jsonFile = wholeFile.getJSONArray("results");
+            JSONObject o;
+            for (int i = 0; i < jsonFile.length(); i++) {
+                o = jsonFile.getJSONObject(i);
+                int id=o.getInt("id");
+                int battery_capacity=o.getInt("battery_capacity");
+                int control_range=o.getInt("control_range");
+                int weight=o.getInt("weight");
+                int max_carriage=o.getInt("max_carriage");
+                int max_speed=o.getInt("max_speed");
+                String manufacturer=o.getString("manufacturer");
+                String typename=o.getString("typename");
+                DroneType droneType = new DroneType(id,typename,manufacturer,weight,max_speed,battery_capacity,control_range,max_carriage);
+                outputCatalogue.put(id,droneType);
+            }
         }
     }
 
@@ -135,16 +152,15 @@ public class ApiAccess  {
      * @param drone_id id of the drone
      * @return JSONObject for details
      */
-    public void fetchDynamics(int drone_id){
+    public void fetchDynamics(int drone_id) throws Exception {
         JSONObject jsonObject = null;
         try {
             String relevantPage = this.dynamic_type.findDetailedRelevantPage(drone_id);
             StringBuilder droneTableAsJson = apiConnector.connect(relevantPage);
             jsonObject = new JSONObject(droneTableAsJson.toString());
-        } catch (WrongSearchTypeException e) {
-            throw new RuntimeException(e);
-        } catch (Exception e) {
-            throw new RuntimeException(e);
+        }catch (Exception e) {
+            logger.log(Level.SEVERE, e.getMessage());
+            throw e;
         }
         this.specificDynamics.clear();
         this.specificDynamics.add(new DroneDetailRow());
@@ -204,11 +220,22 @@ public class ApiAccess  {
      * fetches start and end dynamics for a single drone
      */
 
-    private void fetchStartEndDynamics(){
+    private void fetchStartEndDynamics() throws Exception {
+        List<String> relevantPages = null;
         try {
-            List<String> relevantPages = this.dynamic_type.findRelevantPages();
+            relevantPages = this.dynamic_type.findRelevantPages();
+        }catch (Exception e){
+            logger.log(Level.SEVERE,e.getMessage());
+            throw e;
+        }
+        StringBuilder droneTableAsJson;
             for(String page:relevantPages) {
-                StringBuilder droneTableAsJson = apiConnector.connect(page);
+                try {
+                    droneTableAsJson = apiConnector.connect(page);
+                }catch (Exception e){
+                    logger.log(Level.SEVERE,e.getMessage());
+                    throw e;
+                }
                 JSONObject wholeFile = new JSONObject(droneTableAsJson.toString());
                 JSONArray jsonFile = wholeFile.getJSONArray("results");
                 JSONObject o;
@@ -230,11 +257,6 @@ public class ApiAccess  {
                     outputDrones.get(id).addDroneDynamic(dynamic);
                 }
             }
-        } catch (WrongSearchTypeException e) {
-            throw new RuntimeException(e);
-        } catch (Exception e) {
-            throw new RuntimeException(e);
-        }
     }
 }
 

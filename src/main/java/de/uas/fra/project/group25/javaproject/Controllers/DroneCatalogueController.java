@@ -9,15 +9,13 @@ import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
-import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.VBox;
 
-import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 
-public class DroneCatalogueController implements Initializable {
+public class DroneCatalogueController implements Initializable, Refittable {
     @FXML
     private AnchorPane catalogueSceneAnchor;
     @FXML
@@ -25,24 +23,27 @@ public class DroneCatalogueController implements Initializable {
     @FXML
     private FlowPane parentFlow;
 
-
+    /**
+     * Creates new visual drone catalogue element from passed DroneType
+     * @param dt DroneType object for which a visual element is supposed to be created
+     */
     public void createDroneElement(DroneType dt){
-        /*
-            Create new drone element
-        */
 
+        //Base of new element
         AnchorPane newChild = new AnchorPane();
         newChild.setMaxSize(385, 182);
         newChild.setPrefSize(385, 182);
 
+        //Adds the Drone Icon
         ImageView icon = new ImageView(String.valueOf(getClass().getResource("/Icons/1177291-200.png")));
         icon.setFitHeight(42);
         icon.setFitWidth(42);
-        AnchorPane.setTopAnchor(icon, 50.0);
+        AnchorPane.setTopAnchor(icon, 70.0);
         AnchorPane.setLeftAnchor(icon, 14.0);
-        AnchorPane.setBottomAnchor(icon, 50.0);
+        AnchorPane.setBottomAnchor(icon, 70.0);
         newChild.getChildren().add(icon);
 
+        //Labels that don't change
         VBox vBoxL = new VBox(5);
         vBoxL.getChildren().add(new Label("ID :"));
         vBoxL.getChildren().add(new Label("Manufacturer :"));
@@ -58,6 +59,7 @@ public class DroneCatalogueController implements Initializable {
         AnchorPane.setBottomAnchor(vBoxL, 0.0);
         newChild.getChildren().add(vBoxL);
 
+        //Labels that are gotten from passed Argument
         VBox vBoxR = new VBox(5);
         vBoxR.getChildren().add(new Label(String.valueOf(dt.getId())));
         vBoxR.getChildren().add(new Label(dt.getManufacturer()));
@@ -73,11 +75,16 @@ public class DroneCatalogueController implements Initializable {
         AnchorPane.setBottomAnchor(vBoxR, 0.0);
         newChild.getChildren().add(vBoxR);
 
+        //Add newly created element to flow pane
         parentFlow.getChildren().add(newChild);
     }
 
-
-    private void fitSize(){
+    /**
+     * Implementation of fitCenter() from Refittable Interface.
+     * Binds size of scroll pane and flow pane to the window size
+     */
+    @Override
+    public void fitCenter(){
 
         /*
         Explanation:    1. Get BorderPane "ApplicationContainer" with "WindowAppearance.getInstance().getStage().getScene().getRoot()"
@@ -93,27 +100,24 @@ public class DroneCatalogueController implements Initializable {
         parentFlow.prefWidthProperty().bind(parentScroll.widthProperty());
     }
 
-
-
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
 
-
+        //Changes the size of scroll and flow pane when scene changes height (e.g. when the side menu is collapsed)
         catalogueSceneAnchor.heightProperty().addListener((observable, oldValue, newValue) -> {
-            //System.out.println("height changed");
-            fitSize();
+            fitCenter();
         });
+        //Changes the size of scroll and flow pane when scene changes width (e.g. when the side menu is collapsed)
         catalogueSceneAnchor.widthProperty().addListener((observable, oldValue, newValue) -> {
-            //System.out.println("width changed");
-            fitSize();
+            fitCenter();
         });
+        //Changes the size of scroll and flow pane when window changes height
         WindowAppearance.getInstance().getStage().heightProperty().addListener((observable, oldValue, newValue) -> {
-            //System.out.println("Window height changed");
-            fitSize();
+            fitCenter();
         });
+        //Changes the size of scroll and flow pane when window changes width
         WindowAppearance.getInstance().getStage().widthProperty().addListener((observable, oldValue, newValue) -> {
-            //System.out.println("Window width changed");
-            fitSize();
+            fitCenter();
         });
     }
 }

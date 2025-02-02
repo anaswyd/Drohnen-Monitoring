@@ -6,21 +6,27 @@ import de.uas.fra.project.group25.javaproject.Drone.DroneType;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.layout.AnchorPane;
 import java.io.IOException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class WindowFactory {
+
+    private final Logger logger = Logger.getLogger(this.getClass().getName());
+
     private AnchorPane homeView;
     private AnchorPane droneListView;
     private AnchorPane catalogueView;
     private AnchorPane detailsView;
 
-
-    public WindowFactory() {}
-
+    /**
+     * Loads the fxml file for the home screen and returns it
+     * @return AnchorPane
+     */
     public AnchorPane getHomeView() {
         try{
             homeView = new FXMLLoader(getClass().getResource("HomeScreen.fxml")).load();
         }catch (IOException e){
-            e.printStackTrace(); //Maybe changed
+            logger.log(Level.SEVERE, "Could not load home screen fxml");
         }
 
         return homeView;
@@ -37,7 +43,7 @@ public class WindowFactory {
                 }
             }
         } catch (Exception e) {
-            e.printStackTrace();
+            logger.log(Level.SEVERE, "Could not load DroneList.fxml");
         }
         return droneListView;
     }
@@ -53,7 +59,7 @@ public class WindowFactory {
                 }
             }
         } catch (IOException e) {
-            e.printStackTrace();
+            logger.log(Level.SEVERE, "Could not load DroneCatalogue.fxml");
         }
         return catalogueView;
     }
@@ -69,7 +75,7 @@ public class WindowFactory {
                 }
             }
         } catch (Exception e) {
-            e.printStackTrace();
+            logger.log(Level.SEVERE, "Could not load DroneDetails.fxml");
         }
         return detailsView;
     }

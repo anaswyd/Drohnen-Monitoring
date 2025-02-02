@@ -7,6 +7,7 @@ import java.time.OffsetDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+import java.util.logging.Level;
 
 public class DynamicsSearch extends AbstractSearch{
     private int droneCount;
@@ -35,11 +36,7 @@ public class DynamicsSearch extends AbstractSearch{
         try {
             response = this.apiConnector.connect(link);
         } catch (Exception e) {
-            throw new RuntimeException(e);
-        }
-
-        if (response == null){
-            //do smth like throw "Website not accessible"
+            logger.log(Level.SEVERE, e.getMessage());
             return 0;
         }
         //Or handle it as exception in ApiConnector
@@ -94,7 +91,8 @@ public class DynamicsSearch extends AbstractSearch{
             StringBuilder firstPage = apiConnector.connect(relevantPages.getFirst().toString());
             firstJson = new JSONObject(firstPage.toString());
         }catch (Exception e){
-            e.printStackTrace();
+            logger.log(Level.SEVERE, e.getMessage());
+            return null;
         }
 
         int count = firstJson.getInt("count");
@@ -103,7 +101,8 @@ public class DynamicsSearch extends AbstractSearch{
             firstTimeStamp = ((JSONObject) firstJson.getJSONArray("results").get(0)).getString("timestamp");
             relevantPages.add(new StringBuilder().append(relevantPages.getFirst()).append("&offset=").append(count - droneCount).toString());
         }catch(Exception e){
-            e.printStackTrace();
+            logger.log(Level.SEVERE, e.getMessage());
+            return null;
         }
         //System.out.println(apiConnector.connect(relevantPages.get(1).toString()));
 
@@ -113,7 +112,8 @@ public class DynamicsSearch extends AbstractSearch{
             lastJson = new JSONObject(lastPage.toString());
             lastTimeStamp = ((JSONObject) lastJson.getJSONArray("results").get(0)).getString("timestamp");
         }catch (Exception e){
-            e.printStackTrace();
+            logger.log(Level.SEVERE, e.getMessage());
+            return null;
         }
 
 

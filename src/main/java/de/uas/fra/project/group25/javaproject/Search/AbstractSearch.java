@@ -4,6 +4,8 @@ import de.uas.fra.project.group25.javaproject.ApiConnector.ApiConnector;
 import org.json.JSONObject;
 
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 
 public abstract class AbstractSearch {
@@ -14,6 +16,7 @@ public abstract class AbstractSearch {
     protected final String START_URL;
     protected String currentPage;
     protected ApiConnector apiConnector = new ApiConnector();
+    protected Logger logger = Logger.getLogger(this.getClass().getName());
 
     public AbstractSearch(SearchType searchType){
         this.START_URL = HUB_URL + searchType.getSearchType();
@@ -24,7 +27,8 @@ public abstract class AbstractSearch {
         try {
             response = new ApiConnector().connect(currentPage);
         }catch (Exception e){
-            e.printStackTrace();
+            logger.log(Level.SEVERE, e.getMessage());
+            return null;
         }
         if(response == null){
             return null;

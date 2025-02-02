@@ -7,12 +7,15 @@ import javafx.stage.Stage;
 import java.io.IOException;
 
 public class Launcher extends Application {
+
+    //Creates the two singleton classes
     @Override
-    public void start(Stage stage) throws IOException {
-        WindowAppearance.getInstance();
+    public void start(Stage stage){
         DroneStorage.getInstance();
+        WindowAppearance.getInstance();
     }
 
+    //launch() calls start() and launches the application
     public static void main(String[] args) {
         launch();
     }

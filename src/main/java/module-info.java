@@ -2,6 +2,7 @@ module de.uas.fra.project.group25.javaproject {
     requires javafx.controls;
     requires javafx.fxml;
     requires org.json;
+    requires java.logging;
 
     opens de.uas.fra.project.group25.javaproject to javafx.fxml;
     exports de.uas.fra.project.group25.javaproject;
