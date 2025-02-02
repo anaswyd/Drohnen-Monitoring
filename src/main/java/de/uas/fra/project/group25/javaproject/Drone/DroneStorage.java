@@ -1,19 +1,12 @@
 package de.uas.fra.project.group25.javaproject.Drone;
 
 import de.uas.fra.project.group25.javaproject.ApiConnector.*;
-import de.uas.fra.project.group25.javaproject.Controllers.DroneDetailsController;
 import de.uas.fra.project.group25.javaproject.WindowAppearance;
-import de.uas.fra.project.group25.javaproject.WindowFactory;
-import javafx.fxml.FXMLLoader;
 import javafx.application.Platform;
-import javafx.scene.control.Button;
 import javafx.scene.layout.BorderPane;
-import org.json.JSONObject;
 
-import java.io.IOException;
 import java.util.HashMap;
 import java.util.List;
-import java.util.logging.Logger;
 
 public class DroneStorage {
 
@@ -21,15 +14,17 @@ public class DroneStorage {
     private final ApiAccess apiAccess;
     private boolean updating = false;
 
-
+    /**
+     * Private constructor because class is singleton.
+     */
     private DroneStorage(){
         this.apiAccess = new ApiAccess();
         updateData();
     }
 
     /**
-     * returns Singleton class with the access to all drone specific data
-     *@return DroneStorage
+     * Returns Singleton class with the access to all drone specific data
+     *@return de.uas.fra.project.group25.javaproject.Drone.DroneStorage
      */
     public static DroneStorage getInstance(){
         if (droneStorage == null){
@@ -39,7 +34,7 @@ public class DroneStorage {
     }
 
     /**
-     * retrieves the latest data from dronesim.facets-labs.com
+     * Retrieves the latest data from dronesim.facets-labs.com
      */
     public void updateData() {
         if(!updating){
@@ -126,6 +121,4 @@ public class DroneStorage {
 
         return details;
     }
-
-
 }

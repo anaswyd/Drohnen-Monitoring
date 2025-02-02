@@ -14,8 +14,11 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.VBox;
 
 import java.io.FileWriter;
+import java.io.IOException;
 import java.io.PrintWriter;
 import java.net.URL;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.util.List;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
@@ -70,6 +73,7 @@ public class DroneDetailsController implements Initializable {
         //Begin on empty table
         parentTable.getItems().clear();
 
+        //fetching and displaying details can be done without freezing the whole program (might take a while)
         Thread thread = new Thread(() -> {
             //Fetch relevant information
             List<DroneDetailRow> rows = DroneStorage.getInstance().getDetails(id);
@@ -80,6 +84,12 @@ public class DroneDetailsController implements Initializable {
                 }
             });
 
+            try {
+                Files.createDirectories(Paths.get("./DroneDetailCSVs"));
+            } catch (IOException e) {
+                logger.log(Level.SEVERE, "Failed to create directory \"DroneDetailCSVs\"", e);
+            }
+
             PrintWriter tablesave = null;
             try{
                 //Saves the drone details as a csv file
@@ -88,11 +98,12 @@ public class DroneDetailsController implements Initializable {
                     tablesave.println(row.toString());
                 }
             }catch (Exception e){
-                logger.log(Level.WARNING, "Could not create CSV File of Drone Detail with ID " + id);
+                logger.log(Level.WARNING, "Failed to create CSV File of Drone Detail with ID " + id);
             }
             finally {
-                assert tablesave != null;
-                tablesave.close();
+                if (tablesave != null) {
+                    tablesave.close();
+                }
             }
         });
         thread.start();

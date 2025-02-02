@@ -4,8 +4,6 @@ import de.uas.fra.project.group25.javaproject.Drone.DroneStorage;
 import javafx.application.Application;
 import javafx.stage.Stage;
 
-import java.io.IOException;
-
 public class Launcher extends Application {
 
     //Creates the two singleton classes

@@ -11,8 +11,8 @@ import java.util.logging.Logger;
 
 public class WindowAppearance {
 
-    final int WINDOWMINHEIGHT = 640;
-    final int WINDOWMINWIDTH = 800;
+    final int WINDOWMINHEIGHT = 800;
+    final int WINDOWMINWIDTH = 1000;
 
     private static WindowAppearance windowAppearance;
     private final WindowFactory windowFactory;
@@ -21,7 +21,7 @@ public class WindowAppearance {
 
     /**
      * Private constructor because class is singleton.
-     * Initialises the stage.
+     * Initialises the stage with ApplicationContainer.fxml as root scene.
      */
     private WindowAppearance(Stage stage){
         this.windowFactory = new WindowFactory();
@@ -30,7 +30,7 @@ public class WindowAppearance {
         try{
             root = new FXMLLoader(getClass().getResource("ApplicationContainer.fxml")).load();
         }catch (IOException e){
-            logger.log(Level.SEVERE, "Could not load root fxml");
+            logger.log(Level.SEVERE, "Failed to load ApplicationContainer.fxml. Program cannot continue.");
         }
 
         stage.setScene(new Scene(root, WINDOWMINWIDTH, WINDOWMINHEIGHT-40));
@@ -45,7 +45,7 @@ public class WindowAppearance {
 
     /**
      * Fetches the instance of WindowAppearance
-     * @return WindowAppearance
+     * @return de.uas.fra.project.group25.javaproject.WindowAppearance
      */
     public static WindowAppearance getInstance(){
         if (windowAppearance == null) {
@@ -56,7 +56,7 @@ public class WindowAppearance {
 
     /**
      * Fetches the WindowFactory of WindowAppearance
-     * @return WindowFactory
+     * @return de.uas.fra.project.group25.javaproject.WindowFactory
      */
     public WindowFactory getWindowFactory() {
         return windowFactory;
@@ -64,7 +64,7 @@ public class WindowAppearance {
 
     /**
      * Fetches the current stage
-     * @return Stage
+     * @return javafx.stage.Stage
      */
     public Stage getStage() {
         return mainStage;

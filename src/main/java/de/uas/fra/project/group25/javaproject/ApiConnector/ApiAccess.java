@@ -26,7 +26,7 @@ public class ApiAccess  {
     private final DroneDataSearch drone_type;
     private final DroneDataSearch droneType_type;
     private final DynamicsSearch dynamic_type;
-    protected Logger logger = Logger.getLogger(this.getClass().getName());
+    private final Logger logger = Logger.getLogger(this.getClass().getName());
 
     /**
      * constructor of ApiAccess
@@ -185,37 +185,6 @@ public class ApiAccess  {
         return this.specificDynamics;
     }
 
-
-//Waiting for Map implementation
-//    private void fetchTimestampDynamics(String timestamp){
-//        try {
-//            String relevantPage = this.dynamic_type.findTimestampedRelevantPage(timestamp);
-//            StringBuilder droneTableAsJson = apiConnector.connect(relevantPage);
-//            JSONObject wholeFile = new JSONObject(droneTableAsJson.toString());
-//            JSONArray jsonFile = wholeFile.getJSONArray("results");
-//            JSONObject o;
-//            for (int i = 0; i < jsonFile.length(); i++) {
-//                o = jsonFile.getJSONObject(i);
-//                //String timestamp=this.timestamp;
-//                int speed=o.getInt("speed");
-//                String align_roll=o.getString("align_roll");
-//                String align_pitch=o.getString("align_pitch");
-//                String align_yaw=o.getString("align_yaw");
-//                String longitude=o.getString("longitude");
-//                String latitude=o.getString("latitude");
-//                int battery_status=o.getInt("battery_status");
-//                String last_seen=o.getString("last_seen");
-//                String status=o.getString("status");
-//                DroneDynamic d = new DroneDynamic(timestamp,speed,align_roll,align_pitch,align_yaw,longitude,latitude,battery_status,last_seen,status);
-//                outputDynamics.add(d);
-//            }
-//
-//        } catch (WrongSearchTypeException e) {
-//            throw new RuntimeException(e);
-//        } catch (Exception e) {
-//            throw new RuntimeException(e);
-//        }
-//    }
     /**
      * fetches start and end dynamics for a single drone
      */
