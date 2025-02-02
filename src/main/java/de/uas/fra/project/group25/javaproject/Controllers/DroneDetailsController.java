@@ -75,6 +75,7 @@ public class DroneDetailsController implements Initializable {
 
         //fetching and displaying details can be done without freezing the whole program (might take a while)
         Thread thread = new Thread(() -> {
+            logger.log(Level.INFO, "Starting thread to retrieve and display drone details. Thread ID = " + Thread.currentThread().getId());
             //Fetch relevant information
             List<DroneDetailRow> rows = DroneStorage.getInstance().getDetails(id);
             Platform.runLater(() -> {
@@ -89,7 +90,7 @@ public class DroneDetailsController implements Initializable {
             } catch (IOException e) {
                 logger.log(Level.SEVERE, "Failed to create directory \"DroneDetailCSVs\"", e);
             }
-
+            logger.log(Level.INFO, "start saving drone details");
             PrintWriter tablesave = null;
             try{
                 //Saves the drone details as a csv file
@@ -97,6 +98,7 @@ public class DroneDetailsController implements Initializable {
                 for (DroneDetailRow row : rows) {
                     tablesave.println(row.toString());
                 }
+                logger.log(Level.INFO, "finish saving drone details");
             }catch (Exception e){
                 logger.log(Level.WARNING, "Failed to create CSV File of Drone Detail with ID " + id);
             }
@@ -104,8 +106,10 @@ public class DroneDetailsController implements Initializable {
                 if (tablesave != null) {
                     tablesave.close();
                 }
+                logger.log(Level.INFO, "Thread to retrieve and display drones has ended. Thread ID = " + Thread.currentThread().getId());
             }
         });
+
         thread.start();
     }
 

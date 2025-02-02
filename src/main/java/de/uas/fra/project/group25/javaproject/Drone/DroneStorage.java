@@ -7,11 +7,13 @@ import javafx.scene.layout.BorderPane;
 
 import java.util.HashMap;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class DroneStorage {
-
-    private static DroneStorage droneStorage;
     private final ApiAccess apiAccess;
+    private final Logger logger = Logger.getLogger(getClass().getName());
+    private static DroneStorage droneStorage;
     private boolean updating = false;
 
     /**
@@ -45,6 +47,7 @@ public class DroneStorage {
 
             //create a thread that updates the data
             Thread thread = new Thread(() -> {
+                logger.log(Level.INFO, "DroneData update Thread has been started. Thread ID = " + Thread.currentThread().getId());
 
                 apiAccess.update();
                 //check what the current screen is
@@ -69,9 +72,12 @@ public class DroneStorage {
 
                 //reactivate button
                 (WindowAppearance.getInstance().getStage().getScene().lookup("#refreshButton")).setDisable(false);
+                logger.log(Level.INFO, "DroneData update Thread has ended. Thread ID = " + Thread.currentThread().getId());
             });
-
             thread.start();
+        }
+        else {
+            logger.log(Level.INFO, "Couldn't update data. Currently retrieving details for a specific drone.");
         }
     }
 
@@ -117,6 +123,9 @@ public class DroneStorage {
             }
             details = this.apiAccess.getSpecificDynamic();
             updating = false;
+        }
+        else {
+            logger.log(Level.INFO, "Couldn't retrieve details. DroneData is currently updating.");
         }
 
         return details;

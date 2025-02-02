@@ -19,9 +19,9 @@ public class ApiConnector {
      *
      * @param endpointUrl API endpoint to connect to
      * @return StringBuilder containing the fetched data
-     * @throws IOException            if an I/O error occurs
-     * @throws ResponseException      if the HTTP response code is not OK
-     * @throws VpnConnectionException if the connection fails due to VPN issues
+     * @throws IOException            if I/O error occurs
+     * @throws ResponseException      if HTTP response code is not OK
+     * @throws VpnConnectionException if connection fails due to VPN issues
      */
     public StringBuilder connect(String endpointUrl) throws IOException, ResponseException, VpnConnectionException {
         URL url;

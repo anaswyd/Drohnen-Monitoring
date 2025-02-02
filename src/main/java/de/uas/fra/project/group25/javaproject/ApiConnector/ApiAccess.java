@@ -39,7 +39,6 @@ public class ApiAccess  {
         this.drone_type = new DroneDataSearch(SearchType.DRONE);
         this.droneType_type = new DroneDataSearch(SearchType.DRONETYPE);
         this.dynamic_type = new DynamicsSearch(SearchType.DYNAMICS);
-        update();
     }
 
     /**

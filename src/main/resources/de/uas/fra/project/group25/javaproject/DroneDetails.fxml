@@ -8,37 +8,41 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane fx:id="detailsSceneAnchor" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="590.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="de.uas.fra.project.group25.javaproject.Controllers.DroneDetailsController">
-    <children>
-        <Label layoutX="80.0" layoutY="69.0" text="Details" AnchorPane.leftAnchor="70.0" AnchorPane.topAnchor="60.0">
-            <font>
-                <Font name="Consolas" size="20.0" />
-            </font>
-        </Label>
-        <ScrollPane hbarPolicy="NEVER" layoutX="400.0" prefHeight="200.0" prefWidth="200.0" AnchorPane.bottomAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
-            <content>
-                <VBox fx:id="parentV" alignment="TOP_CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="185.0" prefWidth="186.0" spacing="10.0" />
-            </content></ScrollPane>
-        <TableView fx:id="parentTable" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="70.0" AnchorPane.rightAnchor="210.0" AnchorPane.topAnchor="200.0">
-            <columns>
-                <TableColumn fx:id="colTimestamp" minWidth="50.0" prefWidth="100.0" text="Timestamp" />
-            <TableColumn fx:id="colLastSeen" minWidth="50.0" prefWidth="100.0" text="Last Seen" />
-            <TableColumn fx:id="colSpeed" minWidth="50.0" prefWidth="100.0" text="Speed" />
-                <TableColumn fx:id="colLat" minWidth="50.0" prefWidth="100.0" text="Latitude" />
-                <TableColumn fx:id="colLong" minWidth="50.0" prefWidth="76.0" text="Longitude" />
-                <TableColumn fx:id="colTotalDistance" minWidth="50.0" prefWidth="124.0" text="Total Distance (km)" />
-                <TableColumn fx:id="colAvgSpeed" minWidth="50.0" prefWidth="100.0" text="Avg. Speed" />
-                <TableColumn fx:id="colStatus" minWidth="50.0" prefWidth="100.0" text="Status" />
-                <TableColumn fx:id="colTotalActiveTime" minWidth="50.0" prefWidth="100.0" text="Total Active Time (s)" />
-                <TableColumn fx:id="colBattery" minWidth="50.0" prefWidth="100.0" text="Battery Status" />
-                <TableColumn fx:id="colTotalBattery" minWidth="50.0" prefWidth="100.0" text="Total Battery Consumption" />
-            <TableColumn fx:id="colARoll" prefWidth="75.0" text="Align Roll" />
-            <TableColumn fx:id="colAPitch" minWidth="50.0" prefWidth="100.0" text="Aligh Pitch" />
-            <TableColumn fx:id="colAYaw" minWidth="50.0" prefWidth="100.0" text="Align Yaw" />
-            </columns>
-            <columnResizePolicy>
-                <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
-            </columnResizePolicy>
-        </TableView>
-    </children>
+<AnchorPane fx:id="detailsSceneAnchor" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308"
+            minHeight="-Infinity" minWidth="590.0" xmlns="http://javafx.com/javafx/23.0.1"
+            xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="de.uas.fra.project.group25.javaproject.Controllers.DroneDetailsController">
+    <Label layoutX="80.0" layoutY="69.0" text="Details" AnchorPane.leftAnchor="70.0" AnchorPane.topAnchor="60.0">
+        <font>
+            <Font name="Consolas" size="20.0"/>
+        </font>
+    </Label>
+    <ScrollPane hbarPolicy="NEVER" layoutX="400.0" prefHeight="200.0" prefWidth="200.0" AnchorPane.bottomAnchor="0.0"
+                AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+        <VBox fx:id="parentV" alignment="TOP_CENTER" maxHeight="1.7976931348623157E308"
+              maxWidth="1.7976931348623157E308" prefHeight="185.0" prefWidth="186.0" spacing="10.0"/>
+    </ScrollPane>
+    <TableView fx:id="parentTable" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308"
+               AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="70.0" AnchorPane.rightAnchor="210.0"
+               AnchorPane.topAnchor="200.0">
+        <columns>
+            <TableColumn fx:id="colTimestamp" minWidth="50.0" prefWidth="100.0" text="Timestamp"/>
+        <TableColumn fx:id="colLastSeen" minWidth="50.0" prefWidth="100.0" text="Last Seen"/>
+        <TableColumn fx:id="colSpeed" minWidth="50.0" prefWidth="100.0" text="Speed"/>
+            <TableColumn fx:id="colLat" minWidth="50.0" prefWidth="100.0" text="Latitude"/>
+            <TableColumn fx:id="colLong" minWidth="50.0" prefWidth="76.0" text="Longitude"/>
+            <TableColumn fx:id="colTotalDistance" minWidth="50.0" prefWidth="124.0" text="Total Distance (km)"/>
+            <TableColumn fx:id="colAvgSpeed" minWidth="50.0" prefWidth="100.0" text="Avg. Speed"/>
+            <TableColumn fx:id="colStatus" minWidth="50.0" prefWidth="100.0" text="Status"/>
+            <TableColumn fx:id="colTotalActiveTime" minWidth="50.0" prefWidth="100.0" text="Total Active Time (s)"/>
+            <TableColumn fx:id="colBattery" minWidth="50.0" prefWidth="100.0" text="Battery Status"/>
+            <TableColumn fx:id="colTotalBattery" minWidth="50.0" prefWidth="100.0" text="Total Battery Consumption"/>
+        <TableColumn fx:id="colARoll" prefWidth="75.0" text="Align Roll"/>
+        <TableColumn fx:id="colAPitch" minWidth="50.0" prefWidth="100.0" text="Aligh Pitch"/>
+        <TableColumn fx:id="colAYaw" minWidth="50.0" prefWidth="100.0" text="Align Yaw"/>
+        </columns>
+        <columnResizePolicy>
+            <TableView fx:constant="CONSTRAINED_RESIZE_POLICY"/>
+        </columnResizePolicy>
+    </TableView>
 </AnchorPane>

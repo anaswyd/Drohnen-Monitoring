@@ -38,7 +38,11 @@ public class WindowAppearance {
         stage.setMinWidth(WINDOWMINWIDTH);
         stage.setMaximized(true);
         stage.setTitle("  Drone Simulation Group 25");
-        stage.getIcons().add(new Image("titleIcon.png"));
+        try{
+            stage.getIcons().add(new Image("titleIcon.png"));
+        }catch (NullPointerException e){
+            logger.log(Level.WARNING, "Failed to load title icon.");
+        }
         stage.show();
         mainStage = stage;
     }

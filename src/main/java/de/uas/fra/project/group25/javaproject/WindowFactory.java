@@ -29,7 +29,6 @@ public class WindowFactory {
         }catch (IOException e){
             logger.log(Level.SEVERE, "Failed to load HomeScreen.fxml. Program cannot continue.");
         }
-
         return homeView;
     }
 

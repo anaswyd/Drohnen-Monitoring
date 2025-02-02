@@ -9,8 +9,6 @@ import java.util.logging.Logger;
 
 
 public abstract class AbstractSearch {
-    private static final String USER_AGENT = "MOzilla FIrefox Awesome version";
-    private static final String TOKEN = "Token 64380548480b62bfc42181f19df477ef92839670";
     protected static final String TYPE_CHECK = SearchType.DYNAMICS.getSearchType();
     protected static final String HUB_URL = "http://dronesim.facets-labs.com/api/";
     protected final String START_URL;
